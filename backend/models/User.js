@@ -24,7 +24,6 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ["farmer", "official"],
-    default: "farmer",
     required: true,
   },
   date: {
