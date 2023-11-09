@@ -2,6 +2,12 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const dotenv = require("dotenv");
+const Registration = require("../controllers/Registration/Registration");
+const Multer = require("multer");
+const storage = Multer.memoryStorage();
+const upload = Multer({
+  storage,
+});
 
 dotenv.config();
 
@@ -9,31 +15,9 @@ dotenv.config();
 // @desc     Register farmer
 // @access   Public
 
-router.post("/", async (req, res) => {
-  const { name, contact, publickey, location, aadharHash, role } = req.body;
-
-  try {
-    //See if user Exists
-    let user = await User.findOne({ publickey });
-    if (user) {
-      return res.status(400).json({ errors: [{ msg: "User already exists" }] });
-    }
-
-    user = new User({
-      name,
-      contact,
-      publickey,
-      location,
-      aadharHash,
-      role,
-    });
-
-    await user.save();
-    res.json({ user });
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Server error");
-  }
-});
-
+// add isAuth MiddleWare Here
+router.route("/register/farmer").post(
+  upload.fields([{name : "aadharImage" , maxCount:1} ,{name : "userImage",maxCount:1}]),
+  Registration.registerFarmer
+);
 module.exports = router;
