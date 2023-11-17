@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
-import "../dist/output.css";
+import "../Css/output.css";
 import { Provider } from "react-redux";
 
 import { routers } from "./utils/routes.jsx";

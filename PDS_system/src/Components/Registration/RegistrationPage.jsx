@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "../Common/Modal"
-import FarmerRegistrationForm from "../Form/FarmerRegistrationForm"
+import FarmerRegistrationForm from "../Farmer/FarmerRegistrationForm"
 import ApmcOfficerRegistrationForm from "../Form/ApmcOfficerRegistrationForm"
 import ApmcRegistration from "../Form/ApmcRegistration"
 const RegistrationPage = () => {
