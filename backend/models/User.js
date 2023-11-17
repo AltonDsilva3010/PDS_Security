@@ -17,16 +17,17 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  aadharNumber : {
-    type : Number,
-    required : true
+  aadharNumber: {
+    type: Number,
+    required: true,
   },
   aadharImage: {
     type: String,
+    required: true,
   },
-  userImage : {
-    type : String,
-    required : true,
+  userImage: {
+    type: String,
+    required: true,
   },
   role: {
     type: String,

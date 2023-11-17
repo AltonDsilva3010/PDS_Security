@@ -9,7 +9,6 @@ dotenv.config();
 
 connectDB();
 configCloudinary();
-configCloudinary();
 
 app.use(urlencoded({ extended: true }));
 app.use(express.json({ extended: false })); //bodyParser
