@@ -3,12 +3,12 @@ const cors = require("cors");
 const { urlencoded } = require("express");
 const connectDB = require("./config/db.js");
 const dotenv = require("dotenv");
-const { configCloudinary } = require("./config/cloudinary.js");
-
+const { configCloudinary } = require("./config/cloudinaryConfig.js");
 const app = express();
 dotenv.config();
 
 connectDB();
+configCloudinary();
 configCloudinary();
 
 app.use(urlencoded({ extended: true }));
