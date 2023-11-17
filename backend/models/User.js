@@ -19,7 +19,6 @@ const UserSchema = new mongoose.Schema({
   },
   aadharHash: {
     type: String,
-    required: true,
   },
   role: {
     type: String,
