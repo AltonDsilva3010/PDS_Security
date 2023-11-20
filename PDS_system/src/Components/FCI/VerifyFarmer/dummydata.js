@@ -1,0 +1,106 @@
+
+export const Headers = [
+    
+  { Header: 'Id', accessor: 'id' },
+  { Header: 'Name', accessor: 'name' },
+  { Header: 'Gender', accessor: 'gender' },
+  { Header: 'MetaMaskAddress', accessor: 'metaMaskAddress' },
+    { Header: 'AadharCardNumber', accessor: 'AadharCardNumber' },
+    { Header: 'Address', accessor: 'Address' },
+    {Header : "Status" , accessor : 'status'}
+  ];
+export const dummyData = [
+  {
+    id: 1,
+    name: "John Doe",
+    gender: "Male",
+    metaMaskAddress: "0x1234567890abcdef",
+    AadharCardNumber: "1234-5678-9012",
+    Address: "123 Main Street, Cityville, State",
+    status: true,
+  },
+  {
+    id: 2,
+    name: "Jane Doe",
+    gender: "Female",
+    metaMaskAddress: "0xabcdef1234567890",
+    AadharCardNumber: "9876-5432-1098",
+    Address: "456 Oak Avenue, Townsville, State",
+    status: false,
+  },
+  {
+    id: 3,
+    name: "Sam Smith",
+    gender: "Male",
+    metaMaskAddress: "0x7890abcdef123456",
+    AadharCardNumber: "5678-9012-3456",
+    Address: "789 Pine Road, Villageland, State",
+    status: true,
+  },
+  {
+    id: 4,
+    name: "Alice Johnson",
+    gender: "Female",
+    metaMaskAddress: "0x4567890abcdef123",
+    AadharCardNumber: "3456-7890-1234",
+    Address: "101 Maple Lane, Hamlet, State",
+    status: false,
+  },
+  {
+    id: 5,
+    name: "Bob Williams",
+    gender: "Male",
+    metaMaskAddress: "0x567890abcdef1234",
+    AadharCardNumber: "6789-0123-4567",
+    Address: "202 Cedar Street, Suburbia, State",
+    status: true,
+  },
+  {
+    id: 6,
+    name: "Emily Davis",
+    gender: "Female",
+    metaMaskAddress: "0x234567890abcdef1",
+    AadharCardNumber: "2345-6789-0123",
+    Address: "303 Birch Avenue, Outskirts, State",
+    status: false,
+  },
+  {
+    id: 7,
+    name: "Chris Brown",
+    gender: "Male",
+    metaMaskAddress: "0x34567890abcdef12",
+    AadharCardNumber: "4567-8901-2345",
+    Address: "404 Willow Drive, Countryside, State",
+    status: true,
+  },
+  {
+    id: 8,
+    name: "Grace Taylor",
+    gender: "Female",
+    metaMaskAddress: "0x67890abcdef12345",
+    AadharCardNumber: "7890-1234-5678",
+    Address: "505 Redwood Lane, Riverside, State",
+    status: false,
+  },
+  {
+    id: 9,
+    name: "Daniel Miller",
+    gender: "Male",
+    metaMaskAddress: "0x7890abcdef123456",
+    AadharCardNumber: "8901-2345-6789",
+    Address: "606 Elm Street, Downtown, State",
+    status: true,
+  },
+  {
+    id: 10,
+    name: "Olivia Moore",
+    gender: "Female",
+    metaMaskAddress: "0x890abcdef1234567",
+    AadharCardNumber: "0123-4567-8901",
+    Address: "707 Pine Street, Uptown, State",
+    status: false,
+  },
+  ];
+  
+
+  
