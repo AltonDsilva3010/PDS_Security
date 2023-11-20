@@ -17,7 +17,10 @@ dotenv.config();
 
 // add isAuth MiddleWare Here
 router.route("/register/farmer").post(
-  upload.fields([{name : "aadharImage" , maxCount:1} ,{name : "userImage",maxCount:1}]),
+  upload.fields([
+    { name: "aadharImage", maxCount: 1 },
+    { name: "userImage", maxCount: 1 },
+  ]),
   Registration.registerFarmer
 );
 module.exports = router;
