@@ -1,11 +1,10 @@
 import React from "react";
 import { useTable } from "react-table";
-import { useNavigate } from "react-router-dom";
-const CustomTable = ({ data, columns ,title}) => {
+
+
+const CustomTable = ({ data, columns ,title,handleClick}) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data });
-
-    const navigate = useNavigate();
   return (
     <div className="mb-[50px]">
       <div className="text-center mb-[10px]">
@@ -30,7 +29,7 @@ const CustomTable = ({ data, columns ,title}) => {
               return (
                 <tr {...row.getRowProps()}
                 className="border-b-2 cursor-pointer"
-                    onClick={() => navigate(`/dashboard/fci/verify-farmer/${data[index].id}`)}
+                onClick={()=>handleClick(data[index].id)}
                 >
                   {row.cells.map((cell) => (
                     <td {...cell.getCellProps()} className="py-[8px]">

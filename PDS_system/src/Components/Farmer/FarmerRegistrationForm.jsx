@@ -5,39 +5,82 @@ import { ethers } from "ethers";
 import { toast } from "react-toastify";
 import { connectWallet } from "../../utils/functions";
 import { useNavigate } from "react-router-dom";
-import {RegisterFarmer} from "../../Apis/Farmer/FarmersApi"
+import { RegisterFarmer } from "../../Apis/Farmer/FarmersApi";
 
 const FarmerRegistrationForm = () => {
   const navigator = useNavigate();
   const [farmerDetails, setFarmerDetails] = React.useState({
-    name: "",
-    location: "",
-    contactNumber: "",
-    walletAddress: "",
+    fullName: "",
+    gender: "",
+    dob: "",
+    mobileNumber: "",
+    email: "",
+    state: "",
+    district: "",
+    pinCode: "",
     aadharCardNumber: "",
+    panCardNumber: "",
+    walletAddress: "",
     aadharCardImage: "",
-    userPhoto: "",
   });
 
-  const [previewAadhar , setPreviewAadhar] = React.useState()
-  const [previewUserPhoto , setPreviewUserPhoto]  = React.useState()
+  const [previewAadhar, setPreviewAadhar] = React.useState();
+  const [previewUserPhoto, setPreviewUserPhoto] = React.useState();
+  const [otpVerify, setOtpVerify] = React.useState(false);
+  const [otp, setOtp] = React.useState("");
 
+  const handleOTP = (e) => {
+    e.preventDefault()
+    console.log(e.target.value);
+    setOtp(e.target.value)
+  };
+
+  const handleOtpSubmit = (e) => {
+    e.preventDefault()
+    // check whether entered otp is correct or not
+    // set is mobile Verify
+    setOtpVerify(true)
+  };
+  const handleOtpVerificationBtnClick = (e) => {
+    e.preventDefault()
+    console.log(farmerDetails.mobileNumber);
+    if (farmerDetails.mobileNumber != "") {
+      setOtpVerify((prev) => !prev);
+    } else {
+      toast.error("Enter Mobile Number First ");
+    }
+  };
   const submitForm = (e) => {
     e.preventDefault();
     if (isBtnDisabled()) {
       toast("Please Fill Form Completely");
       return;
-    } else {
+    } 
+    else if(!otpVerify){
+      toast("Please Verify Mobile First");
+      return
+    }
+    else {
       // console.log(farmerDetails)
-      let formData = new FormData()
-      formData.append("name" , farmerDetails.name)
-      formData.append("phone" , farmerDetails.contactNumber)
-      formData.append("metamaskWalletAddress" , farmerDetails.walletAddress)
-      formData.append("location" , farmerDetails.location)
-      formData.append("aadharNumber" , farmerDetails.aadharCardNumber)
-      formData.append("aadharImage" , farmerDetails.aadharCardImage)
-      formData.append("userImage" , farmerDetails.userPhoto)
-      RegisterFarmer(formData)
+      let formData = new FormData();
+      const address = {
+        "state" : farmerDetails.state,
+        "district" : farmerDetails.district,
+        "pinCode"  :farmerDetails.pinCode
+      }
+      formData.append("name", farmerDetails.fullName);
+      formData.append("dob", farmerDetails.dob);
+      formData.append("email", farmerDetails.email);
+      formData.append("gender", farmerDetails.gender);
+      formData.append("address", JSON.stringify(address));
+      formData.append("aadharNumber", farmerDetails.aadharCardNumber);
+      formData.append("panCardNumber", farmerDetails.panCardNumber);
+      formData.append("phone", farmerDetails.mobileNumber);
+      formData.append("metamaskWalletAddress", farmerDetails.walletAddress);
+      formData.append("aadharImage", farmerDetails.aadharCardImage);
+
+      console.log(formData)
+      RegisterFarmer(formData);
       // navigator("/profile-farmer");
     }
   };
@@ -46,11 +89,13 @@ const FarmerRegistrationForm = () => {
     if (
       farmerDetails.aadharCardImage === "" ||
       farmerDetails.aadharCardNumber === "" ||
-      farmerDetails.contactNumber === "" ||
-      farmerDetails.location === "" ||
-      farmerDetails.name === "" ||
-      farmerDetails.userPhoto === "" ||
-      farmerDetails.walletAddress === ""
+      farmerDetails.mobileNumber === "" ||
+      farmerDetails.state === "" ||
+      farmerDetails.district === "" ||
+      farmerDetails.pinCode === "" ||
+      farmerDetails.fullName === "" ||
+      farmerDetails.walletAddress === "" || 
+      farmerDetails.dob === "" || farmerDetails.email === ""
     )
       return true;
 
@@ -58,7 +103,7 @@ const FarmerRegistrationForm = () => {
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // console.log(name, value);
+    console.log(name, value);
     if (name === "userPhoto" || name === "aadharCardImage") {
       const file = e.target.files[0];
       const reader = new FileReader();
@@ -66,11 +111,11 @@ const FarmerRegistrationForm = () => {
 
       reader.onloadend = () => {
         console.log(reader.result);
-        
-        if(name === "userPhoto"){
-          setPreviewUserPhoto(reader.result)
-        }else if(name === "aadharCardImage"){
-          setPreviewAadhar(reader.result)
+
+        if (name === "userPhoto") {
+          setPreviewUserPhoto(reader.result);
+        } else if (name === "aadharCardImage") {
+          setPreviewAadhar(reader.result);
         }
         setFarmerDetails((prev) => ({
           ...prev,
@@ -101,81 +146,176 @@ const FarmerRegistrationForm = () => {
     }
   };
   return (
-    <div className="md:w-[600px] flex items-center justify-center bg-gray-100 ">
+    <div className="flex  items-center justify-center bg-gray-100 ">
       <div className="bg-white w-full p-[40px] rounded-lg shadow-md ">
         <h2 className="text-xl relative font-semibold text-gray-700 text-center mb-4">
           Register as Farmer
         </h2>
+
         <form className="space-y-4">
-          <div className="flex justify-between gap-[50px]">
+          <div className="flex flex-col w-full justify-between gap-[50px]">
             <div className="w-full">
-              <div>
-                <label
-                  htmlFor="farmer-name"
-                  className="block text-sm font-medium text-gray-600"
-                >
-                  Farmer Name
-                </label>
+              <div className="flex">
                 <input
                   type="text"
                   id="farmer-name"
-                  name="name"
-                  value={farmerDetails.name}
+                  name="fullName"
+                  placeholder="Enter Full Name"
+                  value={farmerDetails.fullName}
+                  onChange={handleChange}
+                  className="form-input mt-1 mr-[10px] block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
+                  required
+                />
+
+                <input
+                  type="data"
+                  name="dob"
+                  placeholder="Enter Date Of Birth"
+                  value={farmerDetails.dob}
                   onChange={handleChange}
                   className="form-input mt-1 block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
                   required
                 />
               </div>
-              <div>
-                <label
-                  htmlFor="location"
-                  className="block text-sm font-medium text-gray-600"
+              <div className="flex mt-[10px]">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter Your Email"
+                  value={farmerDetails.email}
+                  onChange={handleChange}
+                  className="form-input mr-[10px] mt-1 block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
+                  required
+                />
+                <select
+                  id="gender"
+                  name="gender"
+                  value={farmerDetails.gender}
+                  onChange={handleChange}
+                  className="form-input mt-1 p-2 w-full border rounded-md"
                 >
-                  Location
-                </label>
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div className="flex justify-between mt-[10px]">
+                {/* DropDown Here */}
                 <input
                   type="text"
-                  name="location"
-                  value={farmerDetails.location}
+                  name="state"
+                  placeholder="State"
+                  value={farmerDetails.state}
                   onChange={handleChange}
-                  id="location"
+                  className="form-input mt-1 mr-[10px] block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
+                  required
+                />
+                {/* dropdown here instead of text */}
+                <input
+                  type="text"
+                  name="district"
+                  placeholder="District"
+                  value={farmerDetails.district}
+                  onChange={handleChange}
+                  className="form-input mt-1 mr-[10px] block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
+                  required
+                />
+                <input
+                  type="text"
+                  name="pinCode"
+                  placeholder="PinCode"
+                  value={farmerDetails.pinCode}
+                  onChange={handleChange}
                   className="form-input mt-1 block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
                   required
                 />
               </div>
-              <div>
-                <label
-                  htmlFor="aadhar-no"
-                  className="block text-sm font-medium text-gray-600"
-                >
-                  Aadhar Number
-                </label>
+              <div className="flex mt-[10px] items-center">
                 <input
-                  type="number"
-                  id="aadhar-no"
+                  type="text"
+                  placeholder="Enter Aadhar Card Number"
                   name="aadharCardNumber"
                   onChange={handleChange}
                   value={farmerDetails.aadharCardNumber}
-                  className="form-input mt-1 block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
+                  className="form-input mt-1 mr-[10px] block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
+                  required
+                />
+
+                <div className="relative  flex flex-col justify-between items-center ">
+                  <input
+                    type="file"
+                    name="aadharCardImage"
+                    onChange={handleChange}
+                    className="opacity-[0] absolute bottom-[-10px] right-[-100px]"
+                  />
+                  <button
+                    disabled
+                    className="bg-blue-500 text-white h-[50px] w-[100px] px-[4px] py-[2px] rounded-lg"
+                  >
+                    Upload Aadhar
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex mt-[10px] items-center">
+                <input
+                  type="text"
+                  placeholder="Enter Pan Card Number"
+                  name="panCardNumber"
+                  onChange={handleChange}
+                  value={farmerDetails.panCardNumber}
+                  className="form-input mt-1 mr-[10px] block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
                   required
                 />
               </div>
-              <div>
-                <label
-                  htmlFor="contact-number"
-                  className="block text-sm font-medium text-gray-600"
-                >
-                  Contact Number
-                </label>
-                <input
-                  type="text"
-                  name="contactNumber"
-                  value={farmerDetails.contactNumber}
-                  onChange={handleChange}
-                  id="contact-number"
-                  className="form-input mt-1 block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
-                  required
+
+              {farmerDetails.aadharCardImage && (
+                <img
+                  src={
+                    farmerDetails.aadharCardImage ? previewAadhar : DummyImage
+                  }
+                  alt="aadhar card image"
+                  className="w-[100px] h-[100px] mt-[10px] object-contain mr-[10px]"
                 />
+              )}
+
+              <div>
+                <div className="flex items-center justify-between mt-[10px]">
+                  <input
+                    type="text"
+                    name="mobileNumber"
+                    placeholder="mobile Number"
+                    value={farmerDetails.mobileNumber}
+                    onChange={handleChange}
+                    className="form-input mt-1 block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
+                    required
+                  />
+                  <button
+                    className="bg-blue-500 text-white rounded-md ml-[10px] h-full"
+                    onClick={handleOtpVerificationBtnClick}
+                  >
+                    Verify Number
+                  </button>
+                </div>
+                {otpVerify && (
+                  <div className="flex justify-between items-center mt-[10px]">
+                    <input
+                      type="text"
+                      onChange={handleOTP}
+                      value={otp}
+                      placeholder="Enter Otp Here"
+                      className="form-input mt-1 block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
+                    />
+
+                    <button
+                      className="bg-blue-500 p-[12px] text-white rounded-md ml-[10px] h-full"
+                      onClick={handleOtpSubmit}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                )}
               </div>
               <div>
                 <label
@@ -202,55 +342,7 @@ const FarmerRegistrationForm = () => {
                 </button>
               </div>
             </div>
-            <div className="flex flex-col items-center mt-[20px]">
-              <div className="relative w-full flex flex-col justify-between items-center mb-[20px]">
-                <img
-                  src={
-                    farmerDetails.aadharCardImage
-                      ? previewAadhar
-                      : DummyImage
-                  }
-                  alt="aadhar card image"
-                  className="w-[80px] h-[80px] object-contain mr-[10px]"
-                />
-                <input
-                  type="file"
-                  name="aadharCardImage"
-                  onChange={handleChange}
-                  className="opacity-[0] absolute bottom-[-10px] right-[-100px]"
-                />
-                <button
-                  disabled
-                  className="bg-blue-500 text-white h-[50px] w-[100px] px-[4px] py-[2px] rounded-lg"
-                >
-                  Upload Aadhar
-                </button>
-              </div>
-
-              <div className="relative w-full flex flex-col justify-between items-center">
-                <img
-                  src={
-                    farmerDetails.userPhoto
-                      ? previewUserPhoto
-                      : DummyUser
-                  }
-                  alt="aadhar card image"
-                  className="w-[80px] h-[80px] object-contain"
-                />
-                <input
-                  type="file"
-                  name="userPhoto"
-                  onChange={handleChange}
-                  className="opacity-[0] absolute bottom-[-10px] right-[-100px]"
-                />
-                <button
-                  disabled
-                  className="bg-blue-500 h-[50px] w-[100px] text-white px-[4px] py-[2px] rounded-lg"
-                >
-                  Upload Photo
-                </button>
-              </div>
-            </div>
+            
           </div>
           <div className="text-center">
             <button

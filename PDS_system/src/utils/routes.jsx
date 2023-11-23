@@ -10,7 +10,9 @@ import Dashboard from "../Components/FCI/Dashboard/Dashboard";
 import VerifyFarmer from "../Components/FCI/VerifyFarmer/VerifyFarmer";
 import VerifyApmcOfficer from "../Components/FCI/VerifyApmcOfficer/VerifyApmcOfficer";
 import Notification from "../Components/FCI/Notifications/Notification";
-import VerifyFarmerPage from "../Components/FCI/VerifyFarmer/VerifyFarmerPage";
+import FarmerRegistrationForm from "../Components/Farmer/FarmerRegistrationForm";
+import VerifyFarmerModal from "../Components/FCI/VerifyFarmer/VerifyFarmerModal";
+// import VerifyFarmerPage from "../Components/FCI/VerifyFarmer/VerifyFarmerPage";
 
 export const routers = [
   {
@@ -24,6 +26,10 @@ export const routers = [
       {
         path: "/registration",
         element: <RegistrationPage />,
+      },
+      {
+        path : '/registration/farmer',
+        element : <FarmerRegistrationForm/>
       },
       {
         path : "/auth",
@@ -48,10 +54,6 @@ export const routers = [
             path : "/dashboard/fci/verify-farmer",
             element : <VerifyFarmer/>
           },
-          {
-            path : '/dashboard/fci/verify-farmer/:id',
-            element : <VerifyFarmerPage/>
-          }
           ,{
             path : "/dashboard/fci/verify-apmc-officer",
             element : <VerifyApmcOfficer/>
@@ -60,6 +62,10 @@ export const routers = [
             element : <Notification/>
           }
         ]
+      },
+      {
+        path : '/dashboard/fci/verify-farmer/:id',
+        element : <VerifyFarmerModal/>
       }
     ],
   },
