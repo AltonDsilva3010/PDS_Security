@@ -3,6 +3,7 @@ import { dummyData ,Headers} from './dummydata'
 import CustomTable from '../../Common/CustomTable'
 import VerifyFarmerModal from './VerifyFarmerModal'
 import { useNavigate } from 'react-router-dom'
+import FilterFarmer from './FilterFarmer'
 const VerifyFarmer = () => {
 
   const navigate = useNavigate()
@@ -19,7 +20,9 @@ const VerifyFarmer = () => {
   }
   return (
     <div className=''>
-      <div>Filter Here</div>
+      <div>
+        <FilterFarmer />
+      </div>
       <CustomTable
         data = {Data}
         columns  = {col}
