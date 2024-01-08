@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import abi from "../../assets/Product.json";
 import { ethers } from "ethers";
+import { useDispatch,useSelector } from "react-redux";
+import {setStateDetails} from "../../ReduxStore/slices/globalStateSlice"
 
 const HomeComponent = () => {
-  const [state, setState] = useState({
-    provider: null,
-    signer: null,
-    contract: null,
-  });
-
+  
+  
+  const dispatch = useDispatch()
+  const globalState = useSelector(state => console.log(state.globlaStateSlice))
   useEffect(() => {
+    console.log(globalState)
     const connectWallet = async () => {
       const contractAddress = "0x722d9CC790cCbFdCddB61317C428f430803E8bd2";
       const contractABI = abi.abi;
@@ -21,7 +22,10 @@ const HomeComponent = () => {
           contractABI,
           signer
         );
-        setState({ provider, signer, contract });
+        console.log(provider,signer,contract)
+        dispatch(setStateDetails({provider,signer,contract}))
+
+        // setState({ provider, signer, contract });
       } catch (error) {
         console.log(error);
       }
