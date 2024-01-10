@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity ^0.8.2;
+pragma solidity ^0.8.19;
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract FarmerContract is AccessControl{
@@ -9,9 +9,8 @@ contract FarmerContract is AccessControl{
     address owner;
     // MyContract myContract = new MyContract();
     constructor() payable {
-        // myContract.setupRole(DEFAULT_ADMIN_ROLE,msg.sender);
-        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender); // Set the contract deployer as the default admin
-        _setupRole(ADMIN_ROLE, msg.sender);
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender); // Set the contract deployer as the default admin
+        _grantRole(ADMIN_ROLE, msg.sender);
         owner = msg.sender;
     }
 
