@@ -1,5 +1,4 @@
 module.exports = {
-  contracts_build_directory: './PDS_system/src/contracts',
   networks: {
     development: {
      host: "127.0.0.1",
@@ -10,7 +9,7 @@ module.exports = {
 
   compilers: {
     solc: {
-      version: "^0.8.6"
+      version: "0.8.19"
     }
   }
 };
