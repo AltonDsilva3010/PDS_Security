@@ -6,8 +6,12 @@ import { toast } from "react-toastify";
 import { connectWallet } from "../../utils/functions";
 import { useNavigate } from "react-router-dom";
 import { RegisterFarmer } from "../../Apis/Farmer/FarmersApi";
-
+import { useDispatch,useSelector } from "react-redux";
 const FarmerRegistrationForm = () => {
+
+  const globalState = useSelector(state => state.globlaStateSlice)
+  console.log("GLOBAL IN REGISTRAION " , globalState)
+
   const navigator = useNavigate();
   const [farmerDetails, setFarmerDetails] = React.useState({
     fullName: "",
@@ -26,7 +30,7 @@ const FarmerRegistrationForm = () => {
 
   const [previewAadhar, setPreviewAadhar] = React.useState();
   const [previewUserPhoto, setPreviewUserPhoto] = React.useState();
-  const [otpVerify, setOtpVerify] = React.useState(false);
+  const [otpVerify, setOtpVerify] = React.useState(true);
   const [otp, setOtp] = React.useState("");
 
   const handleOTP = (e) => {
@@ -35,6 +39,8 @@ const FarmerRegistrationForm = () => {
     setOtp(e.target.value)
   };
 
+
+ 
   const handleOtpSubmit = (e) => {
     e.preventDefault()
     // check whether entered otp is correct or not
@@ -80,7 +86,9 @@ const FarmerRegistrationForm = () => {
       formData.append("aadharImage", farmerDetails.aadharCardImage);
 
       console.log(formData)
-      RegisterFarmer(formData);
+      RegisterFarmer(formData,globalState);
+      // adding farmer address to farmer contract
+
       // navigator("/profile-farmer");
     }
   };
