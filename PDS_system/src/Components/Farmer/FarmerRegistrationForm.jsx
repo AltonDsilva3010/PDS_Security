@@ -6,11 +6,10 @@ import { toast } from "react-toastify";
 import { connectWallet } from "../../utils/functions";
 import { useNavigate } from "react-router-dom";
 import { RegisterFarmer } from "../../Apis/Farmer/FarmersApi";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const FarmerRegistrationForm = () => {
-
-  const globalState = useSelector(state => state.globlaStateSlice)
-  console.log("GLOBAL IN REGISTRAION " , globalState)
+  const globalState = useSelector((state) => state.globlaStateSlice);
+  console.log("GLOBAL IN REGISTRAION ", globalState);
 
   const navigator = useNavigate();
   const [farmerDetails, setFarmerDetails] = React.useState({
@@ -34,21 +33,19 @@ const FarmerRegistrationForm = () => {
   const [otp, setOtp] = React.useState("");
 
   const handleOTP = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     console.log(e.target.value);
-    setOtp(e.target.value)
+    setOtp(e.target.value);
   };
 
-
- 
   const handleOtpSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // check whether entered otp is correct or not
     // set is mobile Verify
-    setOtpVerify(true)
+    setOtpVerify(true);
   };
   const handleOtpVerificationBtnClick = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     console.log(farmerDetails.mobileNumber);
     if (farmerDetails.mobileNumber != "") {
       setOtpVerify((prev) => !prev);
@@ -61,35 +58,31 @@ const FarmerRegistrationForm = () => {
     if (isBtnDisabled()) {
       toast("Please Fill Form Completely");
       return;
-    } 
-    else if(!otpVerify){
+    } else if (!otpVerify) {
       toast("Please Verify Mobile First");
-      return
-    }
-    else {
+      return;
+    } else {
       // console.log(farmerDetails)
       let formData = new FormData();
       const address = {
-        "state" : farmerDetails.state,
-        "district" : farmerDetails.district,
-        "pinCode"  :farmerDetails.pinCode
-      }
+        state: farmerDetails.state,
+        district: farmerDetails.district,
+        pinCode: farmerDetails.pinCode,
+      };
       formData.append("name", farmerDetails.fullName);
       formData.append("dob", farmerDetails.dob);
       formData.append("email", farmerDetails.email);
       formData.append("gender", farmerDetails.gender);
-      formData.append("address", JSON.stringify(address));
+      formData.append("location", JSON.stringify(address));
       formData.append("aadharNumber", farmerDetails.aadharCardNumber);
       formData.append("panCardNumber", farmerDetails.panCardNumber);
       formData.append("phone", farmerDetails.mobileNumber);
       formData.append("metamaskWalletAddress", farmerDetails.walletAddress);
       formData.append("aadharImage", farmerDetails.aadharCardImage);
+      formData.append("role", "farmer");
 
-      console.log(formData)
-      RegisterFarmer(formData,globalState);
-      // adding farmer address to farmer contract
-
-      // navigator("/profile-farmer");
+      RegisterFarmer(formData, globalState, navigator);
+      console.log(formData);
     }
   };
 
@@ -102,8 +95,9 @@ const FarmerRegistrationForm = () => {
       farmerDetails.district === "" ||
       farmerDetails.pinCode === "" ||
       farmerDetails.fullName === "" ||
-      farmerDetails.walletAddress === "" || 
-      farmerDetails.dob === "" || farmerDetails.email === ""
+      farmerDetails.walletAddress === "" ||
+      farmerDetails.dob === "" ||
+      farmerDetails.email === ""
     )
       return true;
 
@@ -350,7 +344,6 @@ const FarmerRegistrationForm = () => {
                 </button>
               </div>
             </div>
-            
           </div>
           <div className="text-center">
             <button

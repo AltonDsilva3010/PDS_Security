@@ -1,8 +1,7 @@
 import React from "react";
 import { useTable } from "react-table";
 
-
-const CustomTable = ({ data, columns ,title,handleClick}) => {
+const CustomTable = ({ data, columns, title, handleClick }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data });
   return (
@@ -24,12 +23,13 @@ const CustomTable = ({ data, columns ,title,handleClick}) => {
             ))}
           </thead>
           <tbody {...getTableBodyProps()} className="text-center">
-            {rows.map((row,index) => {
+            {rows.map((row, index) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()}
-                className="border-b-2 cursor-pointer"
-                onClick={()=>handleClick(data[index].id)}
+                <tr
+                  {...row.getRowProps()}
+                  className="border-b-2 cursor-pointer"
+                  onClick={() => handleClick(data[index]._id)}
                 >
                   {row.cells.map((cell) => (
                     <td {...cell.getCellProps()} className="py-[8px]">

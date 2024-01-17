@@ -5,9 +5,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  phone: {
-    type: Number,
-    required: true,
+  dob: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
+  gender: {
+    type: String,
   },
   metamaskWalletAddress: {
     type: String,
@@ -21,18 +26,27 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  panCardNumber: {
+    type: Number,
+  },
+  phone: {
+    type: Number,
+  },
   aadharImage: {
     type: String,
     required: true,
   },
   userImage: {
     type: String,
-    required: true,
   },
   role: {
     type: String,
     enum: ["farmer", "official"],
     required: true,
+  },
+  verified: {
+    type: Boolean,
+    default: false,
   },
   date: {
     type: Date,

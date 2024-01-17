@@ -23,4 +23,27 @@ router.route("/register/farmer").post(
   ]),
   Registration.registerFarmer
 );
+
+// @route    PUT api/users
+// @desc     Verify farmer
+// @access   Public
+
+router.route("/verify/farmer").put(Registration.verifyFarmer);
+
+// @route    POST api/users
+// @desc     Register farmer
+// @access   Public
+
+router.route("/login/farmer").get(Registration.LoginFarmer);
+
+// @route    POST api/users
+// @desc     Register farmer
+// @access   Public
+router.route("/all/farmer").get(Registration.getAllFarmers);
+
+// @route    POST api/users
+// @desc     Get Farmer Detail by ID
+// @access   Public
+router.route("/byid/farmer").post(Registration.getFarmerById);
+
 module.exports = router;

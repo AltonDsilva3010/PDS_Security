@@ -1,13 +1,11 @@
-
 export const Headers = [
-    
-  { Header: 'Id', accessor: 'id' },
-  { Header: 'Name', accessor: 'name' },
-  { Header: 'Gender', accessor: 'gender' },
-  { Header: 'MetaMaskAddress', accessor: 'metaMaskAddress' },
-    { Header: 'AadharCardNumber', accessor: 'AadharCardNumber' },
-    {Header : "Status" , accessor : 'status'}
-  ];  
+  { Header: "Id", accessor: "_id" },
+  { Header: "Name", accessor: "name" },
+  { Header: "Gender", accessor: "gender" },
+  { Header: "MetaMaskAddress", accessor: "metamaskWalletAddress" },
+  { Header: "AadharCardNumber", accessor: "aadharNumber" },
+  { Header: "Status", accessor: "verified" },
+];
 export const dummyData = [
   {
     id: 1,
