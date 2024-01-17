@@ -1,40 +1,39 @@
 import React, { useState, useEffect } from "react";
-import FarmerABI from "../../contracts/FarmerContract.json";
-import { ethers } from "ethers";
-import { useDispatch,useSelector } from "react-redux";
-import {setStateDetails} from "../../ReduxStore/slices/globalStateSlice"
-
+import HeroImage from "../../assets/Image/pds_hero_image.jpeg";
+import { connectWallet } from "../../utils/functions";
+import { useDispatch } from "react-redux";
 const HomeComponent = () => {
-  
-  
-  // const dispatch = useDispatch()
-  // const globalState = useSelector(state => console.log(state.globlaStateSlice))
-  // useEffect(() => {
-  //   console.log(globalState)
-  //   const connectWallet = async () => {
-  //     const FarmerContractAddress = "0xcA6ce771ee55A1B71d1C9576A6D186760A70f3CF";
-  //     const FarmerContractABI = FarmerABI.abi;
-  //     try {
-  //       let provider = new ethers.BrowserProvider(window.ethereum);
-  //       let signer = await provider.getSigner();
-  //       const contract = new ethers.Contract(
-  //         FarmerContractAddress,
-  //         FarmerContractABI,
-  //         signer
-  //       );
-  //       console.log(provider,signer,contract)
-  //       dispatch(setStateDetails({provider,signer,contract}))
-
-  //       // setState({ provider, signer, contract });
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   connectWallet();
-  // }, []);
-
-  return <div>HomeComponent</div>;
+  const dispatch = useDispatch()
+  const handleBtnClick = ()=>{  
+    connectWallet(dispatch)
+  }
+  return (
+    <div className="w-full h-full">
+      <div className="relative h-full w-full">
+        <img
+          src={HeroImage}
+          className="absolute top-0 left-0 backdrop-blur-sm w-full h-full object-cover"
+        />
+        <div className="absolute h-full top-[20%] left-[10%]">
+          <h1 className="font-bold text-black text-[80px] text-center w-full">PDS System using Blockchain</h1>
+          <div className="text-white font-bold">
+            <h3>By : </h3>
+            <ol>
+              <li>Alton Dsilva - (9192) </li>
+              <li>Harshang Makwana - (9207) </li>
+              <li>Mrudul Patil - (9192) </li>
+              <li>Larry - (9192) </li>
+            </ol>
+            <p>Mentor By : Ashok Kanthe Sir</p>
+          </div>
+        <button
+          onClick={handleBtnClick}
+          className="mt-[10px] p-[10px] bg-black text-white rounded-full"
+        >Connect Your Wallet</button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default HomeComponent;
