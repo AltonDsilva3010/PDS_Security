@@ -1,16 +1,14 @@
 import React from "react";
 import { useNavigate, NavLink } from 'react-router-dom';
+import {useSelector} from "react-redux"
 
 const Header = () => {
+  
+  const {address} = useSelector(state => state.userSlice)
+  console.log("HEADER ADDRESS" , address)
   const [state, setState] = React.useState(false);
-  const [currentUser, setCurrentUser] = React.useState("");
+  const [currentUser, setCurrentUser] = React.useState(address || null)
 
-  React.useEffect(() => {
-    document.onclick = (e) => {
-      const target = e.target;
-      if (!target.closest(".menu-btn")) setState(false);
-    };
-  }, []);
 
   return (
     <nav
@@ -47,17 +45,13 @@ const Header = () => {
           </ul> */}
 
           <div className="flex-1 gap-x-6 items-center justify-end mt-6 space-y-6 md:flex md:space-y-0 md:mt-0">
-            {currentUser ? (
-              <p className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hoover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex">
-                {currentUser.slice(0, 25)}...
-              </p>
-            ) : (
+            
               <div>
                 <button
                   onClick={() => connectWallet()}
                   className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex mr-[20px]"
                 >
-                  Connect Wallet
+                  { currentUser!==null ?<span>{currentUser.slice(0, 25)}...</span> : <span>Connect Wallet</span>}
                 </button>
                 <NavLink to="/registration">
                   <button className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex mr-[20px]">
@@ -70,7 +64,7 @@ const Header = () => {
                   </button>
                 </NavLink> */}
               </div>
-            )}
+            
           </div>
         </div>
       </div>

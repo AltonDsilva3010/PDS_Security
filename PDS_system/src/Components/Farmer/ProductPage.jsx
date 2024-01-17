@@ -2,12 +2,22 @@ import React from 'react'
 import { productData } from '../../utils/dummyDetails'
 import Modal from "../Common/Modal"
 import AddProductForm from './AddProductForm'
-
+import { useSelector } from 'react-redux'
+import { getFarmerProductDetails } from '../../Apis/Farmer/FarmersApi'
+import userSlice from '../../ReduxStore/slices/userSlice'
 const ProductPage = () => {
 
-  const [product_Data , setProductData ] = React.useState(productData)
+  const [product_Data , setProductData ] = React.useState([])
+  const globalState = useSelector(state => state.globlaStateSlice)
+  const user = useSelector(state => state.userSlice)
 
-  const products = product_Data.map((p,index)=>(
+  React.useEffect(()=>{
+    const res = getFarmerProductDetails(globalState)
+    res.then((data)=>{
+      setProductData(data)
+    })
+  },[])
+  const products = product_Data?.map((p,index)=>(
     <div className='flex flex-col p-[10px] bg-white rounded-md shadow-md' key={index}>
       <div>
         <img src={p.commodityImage} alt={p.commodityName} className='w-[200px] object-fit'/>

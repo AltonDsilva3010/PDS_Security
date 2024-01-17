@@ -14,10 +14,20 @@ contract FarmerContract is AccessControl{
         owner = msg.sender;
     }
 
+    struct productDetails {
+        string name ;
+        uint256 quantity ;
+        string unit;
+        string image;
+        string district;
+        string state;
+        bool sold ;
+        string pincode ;
+    }
+    mapping(address => productDetails[]) public farmerProducts;
     address[] public farmerAddresses; //All farmers
     uint256 public farmerCount;
     address[] public farmerRequests;
-
     function addOfficial(address _adminacc) public onlyRole(ADMIN_ROLE){
         grantRole(ADMIN_ROLE, _adminacc);
     }
@@ -33,6 +43,22 @@ contract FarmerContract is AccessControl{
         farmerRequests.push(_address);
     }
 
+    function addProduct( string memory _name ,string memory _pincode , uint256 quantity , string memory _unit , string memory _img , string memory _district,string memory _state) public{
+        productDetails  memory newProduct = productDetails({
+            name : _name,
+            pincode : _pincode,
+            quantity : quantity,
+            unit : _unit ,
+            image : _img ,
+            district  : _district,
+            state : _state,
+            sold : false
+        });
+            farmerProducts[msg.sender].push(newProduct);    
+        }
+    function getFarmerProducts(address _address) public view returns(productDetails[] memory){
+        return farmerProducts[_address];
+    }
     function grantRoleToFarmer(address _farmer) public onlyRole(ADMIN_ROLE) {
 
     // Remove the address from the farmerRequests array.
