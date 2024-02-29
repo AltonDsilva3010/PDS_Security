@@ -10,6 +10,7 @@ import { useDispatch,useSelector } from "react-redux";
 const FarmerRegistrationForm = () => {
 
   const globalState = useSelector(state => state.globlaStateSlice)
+  const {address} = useSelector(state => state.userSlice)
   console.log("GLOBAL IN REGISTRAION " , globalState)
 
   const navigator = useNavigate();
@@ -27,6 +28,15 @@ const FarmerRegistrationForm = () => {
     walletAddress: "",
     aadharCardImage: "",
   });
+
+  React.useEffect(()=>{
+    if(address){
+      setFarmerDetails({
+        ...farmerDetails,
+        ["walletAddress"] : address
+      })
+    }
+  },[])
 
   const [previewAadhar, setPreviewAadhar] = React.useState();
   const [previewUserPhoto, setPreviewUserPhoto] = React.useState();
@@ -140,7 +150,8 @@ const FarmerRegistrationForm = () => {
 
   const handleConnectWallet = async (e) => {
     e.preventDefault();
-    const res = await connectWallet();
+    
+    const res = address
     console.log(res);
     if (!res.error) {
       setFarmerDetails({
@@ -332,22 +343,20 @@ const FarmerRegistrationForm = () => {
                 >
                   Metamask Wallet Address
                 </label>
-                <input
-                  type="text"
-                  name="walletAddress"
-                  value={farmerDetails.walletAddress}
-                  onChange={handleChange}
+                <p
                   id="contract-address"
                   disabled
-                  className="form-input mt-1 block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
-                  required
-                />
-                <button
+                  className="form-input h-[50px] p-[10px] mt-1 block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
+                  
+                >
+                  {address}
+                </p>
+                {/* <button
                   className="bg-blue-500 py-[5px] px-[12px] text-white mt-[8px] rounded-lg"
                   onClick={handleConnectWallet}
                 >
                   Connect Wallet
-                </button>
+                </button> */}
               </div>
             </div>
             

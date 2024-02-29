@@ -12,12 +12,14 @@ const VerifyFarmer = () => {
   const [col , setCol] = React.useState(Headers)
   const [openModal , setOpenModal] = React.useState(false)
   const [activeId , setActiveId] = React.useState("")
+  
   const handleClick = (id) =>{
     console.log(id)
     setActiveId(id)
     navigate(`/dashboard/fci/verify-farmer/${id}`)
     setOpenModal(prev => !prev)
   }
+  
   return (
     <div className=''>
       <div>

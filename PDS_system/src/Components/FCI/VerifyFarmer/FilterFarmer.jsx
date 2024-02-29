@@ -16,6 +16,7 @@ const FilterFarmer = () => {
   const MandisOptions = mandis?.map((m) => {
     return <option name={m.title}>{m.value}</option>;
   });
+  
   React.useEffect(() => {
     if (activeState) {
       console.log(
@@ -27,6 +28,7 @@ const FilterFarmer = () => {
       setMandis(arr[0].mandis);
     }
   }, [activeState]);
+
   const handleStateFilter = (e) => {
     const val = e.target.value;
     if (val != "#") {

@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Modal from "../Common/Modal";
-import FarmerRegistrationForm from "../Farmer/FarmerRegistrationForm";
-import ApmcOfficerRegistrationForm from "../Form/ApmcOfficerRegistrationForm";
-import ApmcRegistration from "../Form/ApmcRegistration";
+import { NavLink } from "react-router-dom";
 const RegistrationPage = () => {
   const [farmerRegistration, setFarmerRegistration] = React.useState(false);
   const [apmcOfficerRegistration, setApmcOfficerRegistration] =
@@ -15,26 +12,26 @@ const RegistrationPage = () => {
     contract: null,
   });
 
-  useEffect(() => {
-    const connectWallet = async () => {
-      const contractAddress = "0x78b190cc9165110C14FF12504461430294Dd96E4";
-      const contractABI = abi.abi;
-      try {
-        let provider = new ethers.BrowserProvider(window.ethereum);
-        let signer = await provider.getSigner();
-        const contract = new ethers.Contract(
-          contractAddress,
-          contractABI,
-          signer
-        );
-        setState({ provider, signer, contract });
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  // useEffect(() => {
+  //   const connectWallet = async () => {
+  //     const contractAddress = "0x78b190cc9165110C14FF12504461430294Dd96E4";
+  //     const contractABI = abi.abi;
+  //     try {
+  //       let provider = new ethers.BrowserProvider(window.ethereum);
+  //       let signer = await provider.getSigner();
+  //       const contract = new ethers.Contract(
+  //         contractAddress,
+  //         contractABI,
+  //         signer
+  //       );
+  //       setState({ provider, signer, contract });
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    connectWallet();
-  }, []);
+  //   connectWallet();
+  // }, []);
 
   const handleRegistration = () => {
     setFarmerRegistration((prev) => !prev);
@@ -49,27 +46,27 @@ const RegistrationPage = () => {
   return (
     <div className="relative w-full ">
       <div className="flex flex-col flex-wrap gap-[20px] justify-around mt-[50px] lg:flex-row lg:mt-[100px] ">
-        <button
-          onClick={handleRegistration}
+        <NavLink
+          to={"/registration/farmer"}
           className="cursor-pointer w-[300px] h-[250px] flex items-center justify-center px-[15px] py-[30px] mb-[30px] lg:px-[30px] lg:py-[25px] lg:mb-0
             bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg"
         >
           <h2 className="text-3xl text-white font-bold text-center">
             Registed as <br /> Farmer
           </h2>
-        </button>
+        </NavLink>
 
-        <button
-          onClick={handleApmcOfficerRegistration}
+        <NavLink
+          to={"/registration/apmc-officer"}
           className="cursor-pointer w-[300px] h-[250px] flex items-center justify-center px-[15px] py-[30px] mb-[30px] lg:px-[30px] lg:py-[25px] lg:mb-0
              bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg"
         >
           <h2 className="text-3xl text-white font-bold text-center">
             Registed as <br /> Apmc Officer
           </h2>
-        </button>
+        </NavLink>
 
-        <button
+        {/* <button
           onClick={handleAddApmc}
           className="cursor-pointer w-[300px] h-[250px] flex items-center justify-center px-[15px] py-[30px] mb-[30px] lg:px-[30px] lg:py-[25px] lg:mb-0
              bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg"
@@ -86,26 +83,26 @@ const RegistrationPage = () => {
           <h2 className="text-3xl text-white font-bold text-center">
             Registed as <br /> FCI Officer
           </h2>
-        </a>
+        </a> */}
       </div>
 
-      {farmerRegistration && (
+      {/* {farmerRegistration && (
         <Modal handleClose={handleRegistration}>
           <FarmerRegistrationForm />
         </Modal>
-      )}
+      )} */}
 
-      {apmcOfficerRegistration && (
+      {/* {apmcOfficerRegistration && (
         <Modal handleClose={handleApmcOfficerRegistration}>
           <ApmcOfficerRegistrationForm />
         </Modal>
-      )}
+      )} */}
 
-      {addApmc && (
+      {/* {addApmc && (
         <Modal handleClose={handleAddApmc}>
           <ApmcRegistration />
         </Modal>
-      )}
+      )} */}
     </div>
   );
 };

@@ -25,7 +25,7 @@ const VerifyFarmerModal = () => {
   }, []);
 
   return (
-    <div className="w-screen h-screen bg-slate-5 flex justify-center items-center ">
+    <div className="w-screen h-screen bg-slate-5 flex  items-center ">
       <div className="bg-white rounded-lg p-[20px] w-[80%]">
         {/* <div className="relative h-[50px] border-b-[2px]">
           <img

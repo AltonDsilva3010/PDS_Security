@@ -5,7 +5,7 @@ import { setStateDetails } from "../ReduxStore/slices/globalStateSlice";
 import  {setUserDetails} from "../ReduxStore/slices/userSlice";
 
 export const connectWallet = async (dispatch) => {
-    const FarmerContractAddress = "0x85b6c48E9c3A418d077901738b7Ad617382D01Ae";
+    const FarmerContractAddress = "0x605bDf4D019E94F05D1821A481595a4Fc28383e1";
     const FarmerContractABI = FarmerABI.abi;
     try {
       let provider = new ethers.BrowserProvider(window.ethereum);

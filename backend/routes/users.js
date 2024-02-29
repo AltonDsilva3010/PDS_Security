@@ -23,4 +23,11 @@ router.route("/register/farmer").post(
   ]),
   Registration.registerFarmer
 );
+
+router.route("/register/apmc-officer").post(
+  upload.fields([
+    { name: "aadharImage", maxCount: 1 },
+  ]),
+  Registration.registerApmcOfficer
+);
 module.exports = router;

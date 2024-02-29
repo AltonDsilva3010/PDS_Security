@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import HeroImage from "../../assets/Image/pds_hero_image.jpeg";
 import { connectWallet } from "../../utils/functions";
-import { useDispatch } from "react-redux";
+import { useDispatch , useSelector } from "react-redux";
 const HomeComponent = () => {
+
+  const {address} = useSelector(state => state.userSlice)
   const dispatch = useDispatch()
   const handleBtnClick = ()=>{  
     connectWallet(dispatch)
@@ -29,7 +31,7 @@ const HomeComponent = () => {
         <button
           onClick={handleBtnClick}
           className="mt-[10px] p-[10px] bg-black text-white rounded-full"
-        >Connect Your Wallet</button>
+        >{address ? address :"Connect Your Wallet"}</button>
         </div>
       </div>
     </div>

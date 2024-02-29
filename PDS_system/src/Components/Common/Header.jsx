@@ -52,7 +52,7 @@ const Header = () => {
                   onClick={() => connectWallet()}
                   className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex mr-[20px]"
                 >
-                  { currentUser!==null ?<span>{currentUser.slice(0, 25)}...</span> : <span>Connect Wallet</span>}
+                  { address ?<span>{address.slice(0, 25)}...</span> : <span>Connect Wallet</span>}
                 </button>
                 <NavLink to="/registration">
                   <button className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex mr-[20px]">

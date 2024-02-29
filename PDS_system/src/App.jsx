@@ -20,7 +20,7 @@ function App() {
   return (
     <div className="overflow-x-hidden h-screen bg-gray-100">
       <Header />
-      <div className="h-full w-[80%] m-auto">
+      <div className="h-full w-[80%] m-auto mt-[20px]">
         <Outlet />
       </div>
       <ToastContainer/>

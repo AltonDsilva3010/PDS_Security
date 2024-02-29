@@ -68,4 +68,64 @@ const registerFarmer = async (req, res) => {
   }
 };
 
-module.exports = { registerFarmer };
+
+const registerApmcOfficer = async(req,res)=>{
+
+  console.log("OFFICER DATA",req.body)
+  if (!req.body) {
+    return res.status(400).json(ErrorMessage("Did'nt Received Data", true));
+  }
+  
+  try {
+    const { name, address, aadharNumber, contactNumber, metaMaskAddress } = req.body;
+    // console.log("REQ",req);
+    if (!name || !address || !aadharNumber || !contactNumber || !metaMaskAddress)
+      return ErrorMessage("Information is Missing", true);
+
+    const existUser = await User.findOne({ aadharNumber }).exec();
+
+    if (existUser) {
+      return res.status(200).json({
+        message: "Already Registered",
+        error: false,
+      });
+    } else {
+      const b64_aadhar = Buffer.from(
+        req.files["aadharImage"][0].buffer
+      ).toString("base64");
+      let aadhar_URI =
+        "data:" +
+        req.files["aadharImage"][0].mimetype +
+        ";base64," +
+        b64_aadhar;
+      const cldRes_aadhar = await handleUpload(aadhar_URI, "PDS_System");
+
+
+      console.log("Aadhar URL", cldRes_aadhar.secure_url);
+
+
+      const newUser = {
+        name: name,
+        phone: contactNumber,
+        metamaskWalletAddress: metaMaskAddress,
+        location: address,
+        aadharNumber: aadharNumber,
+        aadharImage: cldRes_aadhar.secure_url,
+        role: "officer",
+      };
+
+      await User.create(newUser);
+      console.log("CREATED USER")
+      return res.status(200).json({
+        message: "Successfully Registered As Officer",
+        error: false,
+      });
+    }
+  } catch (err) {
+    return res.status(400).json(ErrorMessage(err, true));
+    console.log(err);
+  }
+
+}
+
+module.exports = { registerFarmer , registerApmcOfficer };

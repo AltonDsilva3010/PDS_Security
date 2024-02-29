@@ -27,11 +27,11 @@ const UserSchema = new mongoose.Schema({
   },
   userImage: {
     type: String,
-    required: true,
+    required: false,
   },
   role: {
     type: String,
-    enum: ["farmer", "official"],
+    enum: ["farmer", "officer"],
     required: true,
   },
   date: {
