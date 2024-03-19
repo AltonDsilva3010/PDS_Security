@@ -1,7 +1,9 @@
 const User = require("../../models/User");
 const { ErrorMessage } = require("../../utils/Error");
 const { handleUpload } = require("../../config/cloudinaryConfig");
+const twilio = require("twilio");
 
+const client = twilio(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
 const registerFarmer = async (req, res) => {
   if (!req.body) {
     return res.status(400).json(ErrorMessage("Did'nt Received Data", true));
@@ -68,18 +70,23 @@ const registerFarmer = async (req, res) => {
   }
 };
 
-
-const registerApmcOfficer = async(req,res)=>{
-
-  console.log("OFFICER DATA",req.body)
+const registerApmcOfficer = async (req, res) => {
+  console.log("OFFICER DATA", req.body);
   if (!req.body) {
     return res.status(400).json(ErrorMessage("Did'nt Received Data", true));
   }
-  
+
   try {
-    const { name, address, aadharNumber, contactNumber, metaMaskAddress } = req.body;
+    const { name, address, aadharNumber, contactNumber, metaMaskAddress } =
+      req.body;
     // console.log("REQ",req);
-    if (!name || !address || !aadharNumber || !contactNumber || !metaMaskAddress)
+    if (
+      !name ||
+      !address ||
+      !aadharNumber ||
+      !contactNumber ||
+      !metaMaskAddress
+    )
       return ErrorMessage("Information is Missing", true);
 
     const existUser = await User.findOne({ aadharNumber }).exec();
@@ -100,9 +107,7 @@ const registerApmcOfficer = async(req,res)=>{
         b64_aadhar;
       const cldRes_aadhar = await handleUpload(aadhar_URI, "PDS_System");
 
-
       console.log("Aadhar URL", cldRes_aadhar.secure_url);
-
 
       const newUser = {
         name: name,
@@ -115,7 +120,7 @@ const registerApmcOfficer = async(req,res)=>{
       };
 
       await User.create(newUser);
-      console.log("CREATED USER")
+      console.log("CREATED USER");
       return res.status(200).json({
         message: "Successfully Registered As Officer",
         error: false,
@@ -125,7 +130,92 @@ const registerApmcOfficer = async(req,res)=>{
     return res.status(400).json(ErrorMessage(err, true));
     console.log(err);
   }
+};
 
-}
+const getUserDetails = async (req, res) => {
+  try {
+    const _id = req.id;
 
-module.exports = { registerFarmer , registerApmcOfficer };
+    if (!_id) {
+      return res.status(400).json({
+        message: "Something Went Wrong",
+        error: true,
+      });
+    }
+
+    const details = User.findById(_id);
+    console.log(details);
+
+    if (!details) {
+      return res.status(400).json({
+        message: "User Doesn't Exists",
+        error: true,
+      });
+    }
+
+    res.status(200).json({
+      message: "User found",
+      error: false,
+      details: details,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      message: "Something Went Wrong",
+      error: true,
+    });
+  }
+};
+
+const sendOtp = async (req, res) => {
+  const phoneNumber = req.body.phoneNumber;
+
+  client.verify
+    .services(VERIFY_SERVICE_SID)
+    .verifications.create({ to: phoneNumber, channel: "sms" })
+    .then((verification) => {
+      console.log(`OTP sent to ${phoneNumber}`);
+      return res.status(200).json({
+        message: "OTP sentSuccessfully",
+        error: false,
+      });
+    })
+    .catch((err) => {
+      console.error(`Error sending OTP: ${err}`);
+      // res.status(500).send('Error sending OTP');
+    });
+};
+
+const verifyOtp = async (req, res) => {
+  const phoneNumber = req.body.phoneNumber;
+  const code = req.body.code;
+
+  client.verify
+    .services(VERIFY_SERVICE_SID)
+    .verificationChecks.create({ to: phoneNumber, code: code })
+    .then((verification_check) => {
+      if (verification_check.status === "approved") {
+        console.log(`Verification successful for ${phoneNumber}`);
+        return res.status(200).json({
+          message: "Verification Successfull",
+          error: false,
+        });
+      }
+    })
+    .catch((err) => {
+      console.error(`Error verifying OTP: ${err}`);
+      console.log(`Verification failed for ${phoneNumber}`);
+      return res.status(400).json({
+        message: "Verification Failed. Please try again",
+        error: true,
+      });
+    });
+};
+
+module.exports = {
+  registerFarmer,
+  registerApmcOfficer,
+  getUserDetails,
+  sendOtp, 
+  verifyOtp
+};

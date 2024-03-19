@@ -7,7 +7,7 @@ const CustomTable = ({ data, columns ,title,handleClick}) => {
     useTable({ columns, data });
   return (
     <div className="mb-[50px]">
-      <div className="text-center mb-[10px]">
+      <div className="text-center mb-[20px]">
         <h1 className="text-2xl font-bold">{title}</h1>
       </div>
       <div className="w-full">
@@ -29,7 +29,7 @@ const CustomTable = ({ data, columns ,title,handleClick}) => {
               return (
                 <tr {...row.getRowProps()}
                 className="border-b-2 cursor-pointer"
-                onClick={()=>handleClick(data[index].id)}
+                onClick={handleClick ? ()=>handleClick(data[index].id) : null}
                 >
                   {row.cells.map((cell) => (
                     <td {...cell.getCellProps()} className="py-[8px]">

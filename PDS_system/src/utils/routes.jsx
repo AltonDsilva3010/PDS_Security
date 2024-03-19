@@ -11,9 +11,11 @@ import VerifyApmcOfficer from "../Components/FCI/VerifyApmcOfficer/VerifyApmcOff
 import Notification from "../Components/FCI/Notifications/Notification";
 import FarmerRegistrationForm from "../Components/Farmer/FarmerRegistrationForm";
 import VerifyFarmerModal from "../Components/FCI/VerifyFarmer/VerifyFarmerModal";
+import VerifyApmcOfficerModal from "../Components/FCI/VerifyApmcOfficer/VerifyApmcOfficerModal";
 import DashboardAPMC from "../Components/Apmc/Dashboard/DashboardAPMC";
 // import VerifyFarmerPage from "../Components/FCI/VerifyFarmer/VerifyFarmerPage";
 import ApmcOfficerRegistrationForm from "../Components/Apmc/ApmcOfficerRegistrationForm";
+import DashboardDetails from "../Components/FCI/Dashboard/DashboardDetails";
 export const routers = [
   {
     path: "/",
@@ -53,6 +55,10 @@ export const routers = [
         path : "/dashboard/fci",
         element : <Dashboard/>,
         children : [
+          {
+            index : true,
+            element : <DashboardDetails/>
+          },
          {
             path : "/dashboard/fci/verify-farmer",
             element : <VerifyFarmer/>
@@ -73,7 +79,11 @@ export const routers = [
       {
         path : '/dashboard/fci/verify-farmer/:id',
         element : <VerifyFarmerModal/>
-      }
+      },
+      {
+        path : '/dashboard/fci/verify-apmc-officer/:id',
+        element : <VerifyApmcOfficerModal/>
+      },
     ],
   },
 ];

@@ -21,7 +21,7 @@ const VerifyFarmer = () => {
   }
   
   return (
-    <div className=''>
+    <div>
       <div>
         <FilterFarmer />
       </div>

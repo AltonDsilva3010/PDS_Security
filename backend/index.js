@@ -16,6 +16,7 @@ app.use(cors());
 
 app.get("/", (req, res) => res.send("API running"));
 app.use("/api/users", require("./routes/users"));
+app.use("/api/otp",require("./routes/otp"));
 
 const PORT = process.env.PORT || 5000;
 

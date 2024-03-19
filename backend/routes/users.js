@@ -30,4 +30,9 @@ router.route("/register/apmc-officer").post(
   ]),
   Registration.registerApmcOfficer
 );
+
+router.route("/getdetails").post(
+  Registration.getUserDetails
+);
+
 module.exports = router;

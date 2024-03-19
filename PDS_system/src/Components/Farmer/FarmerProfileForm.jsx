@@ -65,6 +65,10 @@ const FarmerProfileForm = () => {
       [name] : !editBtn[name]
     })
   }
+  const handleFormSubmit = (e)=>{
+    e.preventDefault()
+    
+  }
   // Fetch Farmer Data first
   return (
     <div className="bg-white shadow-md rounded p-[15px]">
@@ -188,6 +192,13 @@ const FarmerProfileForm = () => {
           >Edit</button>
         </div>
         {/* Aadhar Card number */}
+
+        <button 
+          className="bg-slate-100 text-black rounded-md px-[12px] py-[5px] mt-[15px]"
+          onClick={handleFormSubmit}
+        >
+          Submit
+        </button>
       </form>
     </div>
   );
