@@ -47,12 +47,12 @@ const registerFarmer = async (req, res) => {
       const cldRes_aadhar = await handleUpload(aadhar_URI, "PDS_System");
 
       // const b64_user = Buffer.from(req.files["userImage"][0].buffer).toString(
-        
+
       //   "base64"
-      
+
       // );
       // let user_URI =
-       
+
       //   "data:" + req.files["userImage"][0].mimetype + ";base64," + b64_user;
       // const cldRes_user = await handleUpload(user_URI, "PDS_System");
 
@@ -136,22 +136,9 @@ const registerApmcOfficer = async (req, res) => {
 
       await User.create(newUser);
       console.log("CREATED USER");
-        name: name,
-        phone: phone,
-        metamaskWalletAddress: metamaskWalletAddress,
-        location: location,
-        aadharNumber: aadharNumber,
-        gender: gender,
-        aadharImage: cldRes_aadhar.secure_url,
-        userImage: "cldRes_user.secure_url",
-        role: "farmer",
-      };
       await User.create(newUser);
       return res.status(200).json({
         message: "Successfully Registered As Officer",
-        error: false,
-      });
-        message: "Successfully Registered As Farmer",
         error: false,
       });
     }
@@ -241,13 +228,6 @@ const verifyOtp = async (req, res) => {
     });
 };
 
-module.exports = {
-  registerFarmer,
-  registerApmcOfficer,
-  getUserDetails,
-  sendOtp, 
-  verifyOtp
-};
 const verifyFarmer = async (req, res) => {
   if (!req.body) {
     return res.status(400).json(ErrorMessage("Did'nt Received Data", true));
@@ -334,4 +314,8 @@ module.exports = {
   LoginFarmer,
   getAllFarmers,
   getFarmerById,
+  registerApmcOfficer,
+  getUserDetails,
+  sendOtp,
+  verifyOtp,
 };
