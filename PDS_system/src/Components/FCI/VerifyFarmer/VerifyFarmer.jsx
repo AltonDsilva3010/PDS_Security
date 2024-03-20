@@ -22,6 +22,7 @@ const VerifyFarmer = () => {
   useEffect(() => {
     const result = getAllFarmers();
     result.then((data) => {
+      console.log(data); //Array
       setDummyData(data);
     });
   }, []);

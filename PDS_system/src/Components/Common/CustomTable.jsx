@@ -30,7 +30,7 @@ const CustomTable = ({ data, columns, title, handleClick }) => {
                   {...row.getRowProps()}
                   className="border-b-2 cursor-pointer"
                   onClick={
-                    handleClick ? () => handleClick(data[index].id) : null
+                    handleClick ? () => handleClick(data[index]._id) : null
                   }
                 >
                   {row.cells.map((cell) => (
