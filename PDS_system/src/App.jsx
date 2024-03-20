@@ -7,16 +7,16 @@ import { useSelector, useDispatch } from "react-redux";
 import FarmerABI from "../src/contracts/FarmerContract.json";
 import { ethers } from "ethers";
 import { setStateDetails } from "./ReduxStore/slices/globalStateSlice";
+import { getUserRole } from "./Apis/Farmer/FarmersApi";
 function App() {
   const dispatch = useDispatch();
-  const globalState = useSelector((state) =>
-    console.log(state.globlaStateSlice)
-  );
+  const globalState = useSelector((state) => state.globlaStateSlice);
+  console.log(globalState.role);
   useEffect(() => {
-    // console.log(globalState);
+    console.log(globalState);
     const connectWallet = async () => {
       const FarmerContractAddress =
-        "0xEe05Dd4454c6Ddd45EfFcBD2DEee8c59AD5e4FB6";
+        "0xA5a0576C188Fad245706A5a53Aa5BDc3038DdaF4";
       const FarmerContractABI = FarmerABI.abi;
       try {
         let provider = new ethers.BrowserProvider(window.ethereum);
@@ -36,13 +36,17 @@ function App() {
     };
 
     connectWallet();
-    //Backend Login Function
   }, []);
+
+  useEffect(() => {
+    // console.log(globalState);
+    getUserRole(globalState, dispatch);
+  }, [globalState]);
 
   return (
     <div className="overflow-x-hidden h-screen bg-gray-100">
       <Header />
-      <div className="w-[80%] mt-[50px] flex flex-col  items-center m-auto">
+      <div className="w-[80%] mt-[50px] h-full m-auto">
         <Outlet />
       </div>
       <ToastContainer />

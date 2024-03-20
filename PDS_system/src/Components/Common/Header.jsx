@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useNavigate, NavLink } from "react-router-dom";
 
 const Header = () => {
   const [state, setState] = React.useState(false);
@@ -34,17 +34,10 @@ const Header = () => {
             state ? "block" : "hidden"
           }`}
         >
-          {/* <ul className='justify-center items-center space-y-6 md:flex md:space-x-6 md:space-y-0'>
-            {
-              navigation.map((item,index)=>{
-                return(
-                  <li key={index} className='text-gray-700 hover:text-gray-900'>
-                    <a href={item.path} className='block'>{item.title}</a>
-                  </li>
-                )
-              })
-            }
-          </ul> */}
+          <ul className="justify-center items-center space-y-6 md:flex md:space-x-6 md:space-y-0">
+            <NavLink to={"/dashboard/fci"}>Dashboard</NavLink>
+            <NavLink to={"/profile-farmer"}>Profile</NavLink>
+          </ul>
 
           <div className="flex-1 gap-x-6 items-center justify-end mt-6 space-y-6 md:flex md:space-y-0 md:mt-0">
             {currentUser ? (

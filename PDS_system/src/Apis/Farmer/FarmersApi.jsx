@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import { preLoginApi } from "../../Apis/baseApi";
+import { setRole } from "../../ReduxStore/slices/globalStateSlice";
 
 const addFarmerAddressToBlockchain = async (globalState, address) => {
   try {
@@ -13,6 +14,7 @@ const addFarmerAddressToBlockchain = async (globalState, address) => {
   } catch (error) {
     console.log(error);
     return false;
+    C;
   }
 };
 
@@ -21,10 +23,7 @@ export const RegisterFarmer = async (data, globalState, navigator) => {
     toast.error("Data is missing");
     return false;
   }
-  const result = await addFarmerAddressToBlockchain(
-    globalState,
-    data.metamaskWalletAddress
-  );
+  const result = await addFarmerAddressToBlockchain(globalState);
   if (!result) {
     toast.error("not possible to add farmer address");
     return;
@@ -65,3 +64,63 @@ export const getFarmerData = async (id) => {
     toast.error(err);
   }
 };
+
+export const addFarmerProduct = async (data, globalState) => {
+  try {
+    console.log("DONE , ", data);
+    const { contract } = globalState;
+    console.log(contract);
+    await contract.addProduct(
+      data.name,
+      data.pincode,
+      data.quantity,
+      data.unit,
+      data.image,
+      data.district,
+      data.state
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getFarmerProductDetails = async (globalState) => {
+  try {
+    const accounts = await window.ethereum.request({
+      method: "eth_accounts",
+    });
+    // console.log("ACCOUNTS" ,accounts[0])
+    const { contract } = globalState;
+    const res = await contract.getFarmerProducts(accounts[0]);
+
+    // console.log("RESS" , res)
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUserRole = async (globalState, dispatch) => {
+  try {
+    const { signer } = globalState;
+    let addressString = signer.address;
+    addressString = addressString.toLowerCase();
+    // console.log(addressString);
+    const result = await preLoginApi.post("/api/users/login/farmer", {
+      metamaskWalletAddress: addressString,
+    });
+    // console.log(result.data.role);
+    dispatch(setRole(result.data.role));
+    return result.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// export const verifyFarmerFrontend = async(globalState) =>{
+//   try {
+
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }

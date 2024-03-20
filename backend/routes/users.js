@@ -34,7 +34,7 @@ router.route("/verify/farmer").put(Registration.verifyFarmer);
 // @desc     Register farmer
 // @access   Public
 
-router.route("/login/farmer").get(Registration.LoginFarmer);
+router.route("/login/farmer").post(Registration.LoginFarmer);
 
 // @route    POST api/users
 // @desc     Register farmer

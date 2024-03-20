@@ -24,14 +24,15 @@ const VerifyFarmerModal = () => {
 
   const handleVerification = async (address) => {
     //Farmer Verification
+    console.log(address);
     try {
       const { contract } = globalState;
       console.log("CONTRACT DETAILS", contract);
       const result = await contract.grantRoleToFarmer(address);
       console.log("RESULT ", result);
-      const data = await contract.getFarmersRequests();
-      const data2 = await contract.getFarmers();
-      console.log(data, data2);
+      // const data = await contract.getFarmersRequests();
+      // const data2 = await contract.getFarmers();
+      // console.log(data, data2);
       return true;
     } catch (error) {
       console.log(error);
@@ -52,7 +53,7 @@ const VerifyFarmerModal = () => {
   }, []);
 
   return (
-    <div className="w-screen h-screen bg-slate-5 flex justify-center items-center ">
+    <div className="w-screen h-screen bg-slate-5  ">
       <div className="bg-white rounded-lg p-[20px] w-[80%]">
         {/* <div className="relative h-[50px] border-b-[2px]">
           <img
@@ -155,9 +156,7 @@ const VerifyFarmerModal = () => {
               <button
                 className="p-[10px] w-[40%] bg-green-500 text-white rounded-md"
                 onClick={() =>
-                  handleVerification(
-                    "0x48616FB53889280cBCF6331D7e5a630c42dEBf62"
-                  )
+                  handleVerification(`${farmerData.metamaskWalletAddress}`)
                 }
               >
                 Confirm
