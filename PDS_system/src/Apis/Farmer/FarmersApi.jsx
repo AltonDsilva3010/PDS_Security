@@ -10,21 +10,27 @@ const addFarmerAddressToBlockchain = async (globalState, address) => {
     const result = await contract.farmerRegistration(
       "0x48616FB53889280cBCF6331D7e5a630c42dEBf62"
     );
+    //   console.log("RESULT " , result)
+    const data = await contract.getFarmersRequests();
+    console.log(data);
     return true;
   } catch (error) {
     console.log(error);
     return false;
-    C;
   }
 };
 
-export const RegisterFarmer = async (data, globalState, navigator) => {
+export const RegisterFarmer = async (data, globalState) => {
   if (!data) {
     toast.error("Data is missing");
-    return false;
+    return;
   }
-  const result = await addFarmerAddressToBlockchain(globalState);
-  if (!result) {
+  const res = await addFarmerAddressToBlockchain(
+    globalState,
+    data.metamaskWalletAddress
+  );
+  console.log("RES ", res);
+  if (!res) {
     toast.error("not possible to add farmer address");
     return;
   }
@@ -32,9 +38,8 @@ export const RegisterFarmer = async (data, globalState, navigator) => {
     const res = await preLoginApi.post("/api/users/register/farmer", data);
     if (!res.data.error) {
       toast.success(res.data.message);
-      console.log("RES ", res.data, result);
-      navigator("/profile-farmer");
     } else {
+      console.log("ERRRROOROR", res.data.message);
       toast.error(res.data.message);
     }
   } catch (err) {
@@ -45,6 +50,7 @@ export const RegisterFarmer = async (data, globalState, navigator) => {
 export const getAllFarmers = async () => {
   try {
     const result = await preLoginApi.get("/api/users/all/farmer");
+    console.log(result);
     return result.data;
   } catch (err) {
     toast.error(err);

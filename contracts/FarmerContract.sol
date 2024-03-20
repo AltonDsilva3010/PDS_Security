@@ -25,6 +25,17 @@ contract FarmerContract is AccessControl{
         string pincode ;
     }
     mapping(address => productDetails[]) public farmerProducts;
+    struct productDetails {
+        string name ;
+        uint256 quantity ;
+        string unit;
+        string image;
+        string district;
+        string state;
+        bool sold ;
+        string pincode ;
+    }
+    mapping(address => productDetails[]) public farmerProducts;
     address[] public farmerAddresses; //All farmers
     uint256 public farmerCount;
     address[] public farmerRequests;

@@ -8,6 +8,7 @@ export const productData = [
         District : "Pune",
         State : "Maharastra",
         sold : false,
+        unit : "kg"
     },
     {
         commodityName : "Rice",

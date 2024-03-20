@@ -2,7 +2,7 @@ import React from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { addFarmerProduct } from "../../Apis/Farmer/FarmersApi";
-// import { Cloudinary } from "@cloudinary/url-gen";
+import { Cloudinary } from "@cloudinary/url-gen";
 const AddProductForm = () => {
   const globalState = useSelector((state) => state.globlaStateSlice);
   const [data, setData] = React.useState({

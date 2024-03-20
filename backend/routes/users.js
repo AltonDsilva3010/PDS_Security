@@ -24,6 +24,15 @@ router.route("/register/farmer").post(
   Registration.registerFarmer
 );
 
+router
+  .route("/register/apmc-officer")
+  .post(
+    upload.fields([{ name: "aadharImage", maxCount: 1 }]),
+    Registration.registerApmcOfficer
+  );
+
+router.route("/getdetails").post(Registration.getUserDetails);
+
 // @route    PUT api/users
 // @desc     Verify farmer
 // @access   Public

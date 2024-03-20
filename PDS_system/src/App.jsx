@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, json } from "react-router-dom";
 import Header from "./Components/Common/Header";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import FarmerABI from "../src/contracts/FarmerContract.json";
 import { ethers } from "ethers";
 import { setStateDetails } from "./ReduxStore/slices/globalStateSlice";
+import { setUserDetails } from "./ReduxStore/slices/userSlice";
+import { connectWallet } from "./utils/functions";
 import { getUserRole } from "./Apis/Farmer/FarmersApi";
 function App() {
   const dispatch = useDispatch();

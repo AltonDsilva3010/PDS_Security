@@ -8,13 +8,13 @@ const FarmerProfilePage = () => {
     {title : "Products" , href :"/profile-farmer/Products"}
   ]
   return (
-    <div className='flex h-full w-full'>
+    <div className='flex h-full w-[80%] m-auto'>
       <div className='mr-[20px] w-3/12'>
       <Sidebar
         options={options}
       />
       </div>
-        <div className='w-10/12'>
+        <div className='mt-[10px] w-10/12'>
       <Outlet/>
       </div>
     </div>

@@ -14,7 +14,6 @@ const ProductPage = () => {
     const res = getFarmerProductDetails(globalState);
     res.then((data) => {
       setProductData(data);
-      console.log(data);
     });
   }, []);
   const products = product_Data?.map((p, index) => (
