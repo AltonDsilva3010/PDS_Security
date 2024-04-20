@@ -4,7 +4,7 @@ export const Headers = [
   { Header: "Gender", accessor: "gender" },
   { Header: "MetaMaskAddress", accessor: "metamaskWalletAddress" },
   { Header: "AadharCardNumber", accessor: "aadharNumber" },
-  { Header: "Status", accessor: "verified" },
+  { Header: "Verified", accessor: "verified" },
 ];
 export const dummyData = [
   {

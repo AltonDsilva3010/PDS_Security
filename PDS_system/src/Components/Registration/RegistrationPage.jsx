@@ -62,10 +62,18 @@ const RegistrationPage = () => {
              bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg"
         >
           <h2 className="text-3xl text-white font-bold text-center">
-            Registed as <br /> Apmc Officer
+            Register as <br /> Apmc Officer
           </h2>
         </NavLink>
-
+        {/* <NavLink
+          to={"/registration/apmc"}
+          className="cursor-pointer w-[300px] h-[250px] flex items-center justify-center px-[15px] py-[30px] mb-[30px] lg:px-[30px] lg:py-[25px] lg:mb-0
+             bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg"
+        >
+          <h2 className="text-3xl text-white font-bold text-center">
+            Add a new APMC
+          </h2>
+        </NavLink> */}
         {/* <button
           onClick={handleAddApmc}
           className="cursor-pointer w-[300px] h-[250px] flex items-center justify-center px-[15px] py-[30px] mb-[30px] lg:px-[30px] lg:py-[25px] lg:mb-0

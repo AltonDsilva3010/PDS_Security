@@ -582,6 +582,10 @@ input:focus{
   left: 1rem;
 }
 
+.left-\[10\%\] {
+  left: 10%;
+}
+
 .left-\[50\%\] {
   left: 50%;
 }
@@ -602,6 +606,10 @@ input:focus{
   top: 1.25rem;
 }
 
+.top-\[10\%\] {
+  top: 10%;
+}
+
 .top-\[20px\] {
   top: 20px;
 }
@@ -612,10 +620,6 @@ input:focus{
 
 .m-auto {
   margin: auto;
-}
-
-.m-1 {
-  margin: 0.25rem;
 }
 
 .mx-2 {
@@ -678,14 +682,6 @@ input:focus{
   margin-left: 10px;
 }
 
-.mr-1 {
-  margin-right: 0.25rem;
-}
-
-.mr-2 {
-  margin-right: 0.5rem;
-}
-
 .mr-\[10px\] {
   margin-right: 10px;
 }
@@ -724,10 +720,6 @@ input:focus{
 
 .mt-\[15px\] {
   margin-top: 15px;
-}
-
-.mt-\[20px\] {
-  margin-top: 20px;
 }
 
 .mt-\[4px\] {
@@ -1119,6 +1111,21 @@ input:focus{
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.bg-blue-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(37 99 235 / var(--tw-bg-opacity));
+}
+
+.bg-blue-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(219 234 254 / var(--tw-bg-opacity));
+}
+
+.bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
+
 .bg-gradient-to-r {
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
@@ -1273,10 +1280,6 @@ input:focus{
   line-height: 2.5rem;
 }
 
-.text-\[30px\] {
-  font-size: 30px;
-}
-
 .text-\[80px\] {
   font-size: 80px;
 }
@@ -1328,19 +1331,9 @@ input:focus{
   color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
-.text-green-500 {
-  --tw-text-opacity: 1;
-  color: rgb(34 197 94 / var(--tw-text-opacity));
-}
-
 .text-green-700 {
   --tw-text-opacity: 1;
   color: rgb(21 128 61 / var(--tw-text-opacity));
-}
-
-.text-red-500 {
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity));
 }
 
 .text-red-700 {

@@ -57,7 +57,7 @@ const registerFarmer = async (req, res) => {
       // const cldRes_user = await handleUpload(user_URI, "PDS_System");
 
       console.log("Aadhar URL", cldRes_aadhar.secure_url);
-      console.log("USER URL", cldRes_user.secure_url);
+      // console.log("USER URL", cldRes_user.secure_url);
 
       console.log(name, location, aadharNumber, phone, metamaskWalletAddress);
 
@@ -68,7 +68,7 @@ const registerFarmer = async (req, res) => {
         location: location,
         aadharNumber: aadharNumber,
         aadharImage: cldRes_aadhar.secure_url,
-        userImage: cldRes_user.secure_url,
+        // userImage: cldRes_user.secure_url,
         role: "farmer",
       };
 
@@ -86,22 +86,16 @@ const registerFarmer = async (req, res) => {
 };
 
 const registerApmcOfficer = async (req, res) => {
-  console.log("OFFICER DATA", req.body);
+  // console.log("OFFICER DATA", req.body);
   if (!req.body) {
     return res.status(400).json(ErrorMessage("Did'nt Received Data", true));
   }
 
   try {
-    const { name, address, aadharNumber, contactNumber, metaMaskAddress } =
+    const { name, location, aadharNumber, phone, metamaskWalletAddress } =
       req.body;
     // console.log("REQ",req);
-    if (
-      !name ||
-      !address ||
-      !aadharNumber ||
-      !contactNumber ||
-      !metaMaskAddress
-    )
+    if (!name || !location || !aadharNumber || !phone || !metamaskWalletAddress)
       return ErrorMessage("Information is Missing", true);
 
     const existUser = await User.findOne({ aadharNumber }).exec();
@@ -126,17 +120,16 @@ const registerApmcOfficer = async (req, res) => {
 
       const newUser = {
         name: name,
-        phone: contactNumber,
-        metamaskWalletAddress: metaMaskAddress,
-        location: address,
+        phone: phone,
+        metamaskWalletAddress: metamaskWalletAddress,
+        location: location,
         aadharNumber: aadharNumber,
         aadharImage: cldRes_aadhar.secure_url,
         role: "officer",
       };
-
+      console.log(newUser);
       await User.create(newUser);
       console.log("CREATED USER");
-      await User.create(newUser);
       return res.status(200).json({
         message: "Successfully Registered As Officer",
         error: false,

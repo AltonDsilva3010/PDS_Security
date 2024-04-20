@@ -3,10 +3,17 @@ import { useNavigate, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Header = () => {
-  const { address } = useSelector((state) => state.userSlice);
-  console.log("HEADER ADDRESS", address);
+  // const { address } = useSelector((state) => state.userSlice);
+  // console.log("HEADER ADDRESS", address);
+  const globalState = useSelector((state) => state.globlaStateSlice);
+  const userRole = globalState.role;
+  console.log(globalState);
   const [state, setState] = React.useState(false);
-  const [currentUser, setCurrentUser] = React.useState(address || null);
+  // const [currentUser, setCurrentUser] = React.useState(address || null);
+  let userAddress;
+  if (globalState.signer) {
+    userAddress = globalState.signer.address;
+  }
 
   return (
     <nav
@@ -19,11 +26,11 @@ const Header = () => {
     >
       <div className="gap-x-14 items-center max-w-screen-xl mx-auto px-4 md:flex md:px-8">
         <div className="flex items-center justify-between py-5 md:block">
-          <a href="javascript:void(0)">
+          <NavLink to={"/"}>
             <h1>
-              <b>PDS</b>
+              <b>BlockSure PDS</b>
             </h1>
-          </a>
+          </NavLink>
         </div>
         <div
           className={`flex-1 items-center mt-8 md:mt-0 md:flex ${
@@ -31,8 +38,10 @@ const Header = () => {
           }`}
         >
           <ul className="justify-center items-center space-y-6 md:flex md:space-x-6 md:space-y-0">
-            <NavLink to={"/dashboard/fci"}>Dashboard</NavLink>
-            <NavLink to={"/profile-farmer"}>Profile</NavLink>
+            {userRole == "officer" && (
+              <NavLink to={"/dashboard/fci"}>Dashboard</NavLink>
+            )}
+            {userAddress && <NavLink to={"/profile-farmer"}>Profile</NavLink>}
           </ul>
 
           <div className="flex-1 gap-x-6 items-center justify-end mt-6 space-y-6 md:flex md:space-y-0 md:mt-0">
@@ -41,17 +50,27 @@ const Header = () => {
                 onClick={() => connectWallet()}
                 className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex mr-[20px]"
               >
-                {address ? (
-                  <span>{address.slice(0, 25)}...</span>
+                {userAddress ? (
+                  <span>{userAddress.slice(0, 25)}...</span>
                 ) : (
                   <span>Connect Wallet</span>
                 )}
               </button>
-              <NavLink to="/registration">
-                <button className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex mr-[20px]">
-                  Register
-                </button>
-              </NavLink>
+
+              {userRole == "officer" ? (
+                <NavLink to="/registration/apmc">
+                  <button className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex mr-[20px]">
+                    Add APMC
+                  </button>
+                </NavLink>
+              ) : (
+                <NavLink to="/registration">
+                  <button className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex mr-[20px]">
+                    Register
+                  </button>
+                </NavLink>
+              )}
+
               {/* <NavLink to="/signUp">
                   <button className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex">
                     Login / SignUp

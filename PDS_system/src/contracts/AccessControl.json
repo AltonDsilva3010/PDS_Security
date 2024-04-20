@@ -219,14 +219,30 @@
   "ast": {
     "absolutePath": "@openzeppelin/contracts/access/AccessControl.sol",
     "exportedSymbols": {
-      "AccessControl": [315],
-      "Context": [418],
-      "ERC165": [671],
-      "IAccessControl": [388],
-      "IERC165": [683],
-      "Math": [1549],
-      "SignedMath": [1654],
-      "Strings": [647]
+      "AccessControl": [
+        315
+      ],
+      "Context": [
+        418
+      ],
+      "ERC165": [
+        671
+      ],
+      "IAccessControl": [
+        388
+      ],
+      "IERC165": [
+        683
+      ],
+      "Math": [
+        1549
+      ],
+      "SignedMath": [
+        1654
+      ],
+      "Strings": [
+        647
+      ]
     },
     "id": 316,
     "license": "MIT",
@@ -234,7 +250,12 @@
     "nodes": [
       {
         "id": 1,
-        "literals": ["solidity", "^", "0.8", ".0"],
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
         "nodeType": "PragmaDirective",
         "src": "108:23:0"
       },
@@ -293,7 +314,9 @@
             "baseName": {
               "id": 7,
               "name": "Context",
-              "nameLocations": ["1967:7:0"],
+              "nameLocations": [
+                "1967:7:0"
+              ],
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 418,
               "src": "1967:7:0"
@@ -306,7 +329,9 @@
             "baseName": {
               "id": 9,
               "name": "IAccessControl",
-              "nameLocations": ["1976:14:0"],
+              "nameLocations": [
+                "1976:14:0"
+              ],
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 388,
               "src": "1976:14:0"
@@ -319,7 +344,9 @@
             "baseName": {
               "id": 11,
               "name": "ERC165",
-              "nameLocations": ["1992:6:0"],
+              "nameLocations": [
+                "1992:6:0"
+              ],
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 671,
               "src": "1992:6:0"
@@ -340,7 +367,13 @@
         },
         "fullyImplemented": true,
         "id": 315,
-        "linearizedBaseContracts": [315, 671, 683, 388, 418],
+        "linearizedBaseContracts": [
+          315,
+          671,
+          683,
+          388,
+          418
+        ],
         "name": "AccessControl",
         "nameLocation": "1950:13:0",
         "nodeType": "ContractDefinition",
@@ -477,7 +510,9 @@
                 "pathNode": {
                   "id": 21,
                   "name": "RoleData",
-                  "nameLocations": ["2122:8:0"],
+                  "nameLocations": [
+                    "2122:8:0"
+                  ],
                   "nodeType": "IdentifierPath",
                   "referencedDeclaration": 19,
                   "src": "2122:8:0"
@@ -568,7 +603,10 @@
                       "id": 32,
                       "name": "_checkRole",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [92, 131],
+                      "overloadedDeclarations": [
+                        92,
+                        131
+                      ],
                       "referencedDeclaration": 92,
                       "src": "2631:10:0",
                       "typeDescriptions": {
@@ -652,7 +690,9 @@
             "visibility": "internal"
           },
           {
-            "baseFunctions": [670],
+            "baseFunctions": [
+              670
+            ],
             "body": {
               "id": 59,
               "nodeType": "Block",
@@ -938,7 +978,9 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [355],
+            "baseFunctions": [
+              355
+            ],
             "body": {
               "id": 78,
               "nodeType": "Block",
@@ -1219,7 +1261,10 @@
                       "id": 85,
                       "name": "_checkRole",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [92, 131],
+                      "overloadedDeclarations": [
+                        92,
+                        131
+                      ],
                       "referencedDeclaration": 131,
                       "src": "3526:10:0",
                       "typeDescriptions": {
@@ -1753,7 +1798,10 @@
                             "id": 105,
                             "name": "revert",
                             "nodeType": "Identifier",
-                            "overloadedDeclarations": [4294967277, 4294967277],
+                            "overloadedDeclarations": [
+                              4294967277,
+                              4294967277
+                            ],
                             "referencedDeclaration": 4294967277,
                             "src": "3970:6:0",
                             "typeDescriptions": {
@@ -1874,7 +1922,9 @@
             "visibility": "internal"
           },
           {
-            "baseFunctions": [363],
+            "baseFunctions": [
+              363
+            ],
             "body": {
               "id": 145,
               "nodeType": "Block",
@@ -2036,7 +2086,9 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [371],
+            "baseFunctions": [
+              371
+            ],
             "body": {
               "id": 165,
               "nodeType": "Block",
@@ -2182,7 +2234,9 @@
                 "modifierName": {
                   "id": 154,
                   "name": "onlyRole",
-                  "nameLocations": ["5003:8:0"],
+                  "nameLocations": [
+                    "5003:8:0"
+                  ],
                   "nodeType": "IdentifierPath",
                   "referencedDeclaration": 38,
                   "src": "5003:8:0"
@@ -2275,7 +2329,9 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [379],
+            "baseFunctions": [
+              379
+            ],
             "body": {
               "id": 185,
               "nodeType": "Block",
@@ -2421,7 +2477,9 @@
                 "modifierName": {
                   "id": 174,
                   "name": "onlyRole",
-                  "nameLocations": ["5429:8:0"],
+                  "nameLocations": [
+                    "5429:8:0"
+                  ],
                   "nodeType": "IdentifierPath",
                   "referencedDeclaration": 38,
                   "src": "5429:8:0"
@@ -2514,7 +2572,9 @@
             "visibility": "public"
           },
           {
-            "baseFunctions": [387],
+            "baseFunctions": [
+              387
+            ],
             "body": {
               "id": 208,
               "nodeType": "Block",
@@ -2615,7 +2675,10 @@
                       "id": 195,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [4294967278, 4294967278],
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
                       "referencedDeclaration": 4294967278,
                       "src": "6125:7:0",
                       "typeDescriptions": {
@@ -2981,7 +3044,9 @@
               "src": "7245:174:0",
               "statements": [
                 {
-                  "assignments": [232],
+                  "assignments": [
+                    232
+                  ],
                   "declarations": [
                     {
                       "constant": false,
@@ -4131,7 +4196,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2024-01-24T09:17:51.610Z",
+  "updatedAt": "2024-04-08T15:50:17.498Z",
   "devdoc": {
     "details": "Contract module that allows children to implement role-based access control mechanisms. This is a lightweight version that doesn't allow enumerating role members except through off-chain means by accessing the contract event logs. Some applications may benefit from on-chain enumerability, for those cases see {AccessControlEnumerable}. Roles are referred to by their `bytes32` identifier. These should be exposed in the external API and be unique. The best way to achieve this is by using `public constant` hash digests: ```solidity bytes32 public constant MY_ROLE = keccak256(\"MY_ROLE\"); ``` Roles can be used to represent a set of permissions. To restrict access to a function call, use {hasRole}: ```solidity function foo() public {     require(hasRole(MY_ROLE, msg.sender));     ... } ``` Roles can be granted and revoked dynamically via the {grantRole} and {revokeRole} functions. Each role has an associated admin role, and only accounts that have a role's admin role can call {grantRole} and {revokeRole}. By default, the admin role for all roles is `DEFAULT_ADMIN_ROLE`, which means that only accounts with this role will be able to grant or revoke other roles. More complex role relationships can be created by using {_setRoleAdmin}. WARNING: The `DEFAULT_ADMIN_ROLE` is also its own admin: it has permission to grant and revoke this role. Extra precautions should be taken to secure accounts that have been granted it. We recommend using {AccessControlDefaultAdminRules} to enforce additional security measures for this role.",
     "events": {

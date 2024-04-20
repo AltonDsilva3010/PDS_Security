@@ -16,7 +16,7 @@ const FilterFarmer = () => {
   const MandisOptions = mandis?.map((m) => {
     return <option name={m.title}>{m.value}</option>;
   });
-  
+
   React.useEffect(() => {
     if (activeState) {
       console.log(
@@ -51,9 +51,9 @@ const FilterFarmer = () => {
     setVerifyStatus(e.target.value);
   };
 
-  const handlefilterButton = ()=>{
-    console.log("Make api cal for fetching details based on filters set ")
-  }
+  const handlefilterButton = () => {
+    console.log("Make api cal for fetching details based on filters set ");
+  };
   return (
     <div className="grid grid-cols-4 gap-[10px] mb-[40px]">
       <select
@@ -80,30 +80,32 @@ const FilterFarmer = () => {
 
       <div className="flex bg-white  p-[8px] rounded-md justify-between items-center">
         {/* <div className="flex flex-col items-center justify-center"> */}
-          <label htmlFor="status-true">Verified</label>
-          <input
-            type="radio"
-            id="status-true"
-            name="verifystatus"
-            value={true}
-            onChange={handleStatus}
-          />
+        <label htmlFor="status-true">Verified</label>
+        <input
+          type="radio"
+          id="status-true"
+          name="verifystatus"
+          value={true}
+          onChange={handleStatus}
+        />
         {/* </div> */}
         {/* <div> */}
-          <label htmlFor="status-false">Not Verified</label>
-          <input
-            type="radio"
-            id="status-false"
-            name="verifystatus"
-            value={false}
-            onChange={handleStatus}
-          />
+        <label htmlFor="status-false">Not Verified</label>
+        <input
+          type="radio"
+          id="status-false"
+          name="verifystatus"
+          value={false}
+          onChange={handleStatus}
+        />
         {/* </div> */}
       </div>
       <button
-       className="bg-orange-500 rounded-md text-white font-xl font-bold"
-       onClick={handlefilterButton}
-      >Search</button>
+        className="bg-orange-500 rounded-md text-white font-xl font-bold"
+        onClick={handlefilterButton}
+      >
+        Search
+      </button>
     </div>
   );
 };

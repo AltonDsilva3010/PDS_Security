@@ -3,7 +3,10 @@ import { dummyData } from "./dummydata";
 import CloseBtn from "../../../assets/icons/x-lg.svg";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getFarmerData } from "../../../Apis/Farmer/FarmersApi";
+import {
+  getFarmerData,
+  verifyFarmerFrontend,
+} from "../../../Apis/Farmer/FarmersApi";
 const VerifyFarmerModal = () => {
   const [farmerData, setFarmerData] = React.useState("");
   function openImage() {
@@ -20,23 +23,11 @@ const VerifyFarmerModal = () => {
   }
 
   const globalState = useSelector((state) => state.globlaStateSlice);
-  console.log("GLOBAL IN REGISTRAION ", globalState);
+  // console.log("GLOBAL IN REGISTRAION ", globalState);
 
-  const handleVerification = async (address) => {
+  const handleVerification = () => {
     //Farmer Verification
-    console.log(address);
-    try {
-      const { contract } = globalState;
-      console.log("CONTRACT DETAILS", contract);
-      const result = await contract.grantRoleToFarmer(address);
-      console.log("RESULT ", result);
-      // const data = await contract.getFarmersRequests();
-      // const data2 = await contract.getFarmers();
-      // console.log(data, data2);
-      return true;
-    } catch (error) {
-      console.log(error);
-    }
+    verifyFarmerFrontend(farmerData, globalState);
   };
 
   const { id } = useParams();
@@ -79,7 +70,7 @@ const VerifyFarmerModal = () => {
               <div className="flex flex-col w-full">
                 <span className="font-semibold">Date Of Birth</span>
                 <span className="p-[10px] border-[2px] rounded-md border-black">
-                  {farmerData.dob ?? 10}
+                  {farmerData.date ?? 10}
                 </span>
               </div>
             </div>
@@ -124,7 +115,7 @@ const VerifyFarmerModal = () => {
               <div className="flex flex-col mr-[10px] w-full">
                 <span className="font-semibold">Aadhar card Number</span>
                 <span className="p-[10px] border-[2px] rounded-md border-black">
-                  {farmerData.AadharCardNumber ?? "Aadhar"}
+                  {farmerData.aadharNumber ?? "Aadhar"}
                 </span>
               </div>
               <div className="flex flex-col mr-[10px] w-full">
@@ -155,9 +146,7 @@ const VerifyFarmerModal = () => {
               </button>
               <button
                 className="p-[10px] w-[40%] bg-green-500 text-white rounded-md"
-                onClick={() =>
-                  handleVerification(`${farmerData.metamaskWalletAddress}`)
-                }
+                onClick={handleVerification}
               >
                 Confirm
               </button>

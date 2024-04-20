@@ -20,7 +20,7 @@ const addFarmerAddressToBlockchain = async (globalState, address) => {
   }
 };
 
-export const RegisterFarmer = async (data, globalState) => {
+export const RegisterFarmer = async (data, globalState, navigator) => {
   if (!data) {
     toast.error("Data is missing");
     return;
@@ -38,6 +38,7 @@ export const RegisterFarmer = async (data, globalState) => {
     const res = await preLoginApi.post("/api/users/register/farmer", data);
     if (!res.data.error) {
       toast.success(res.data.message);
+      navigator("/profile-farmer");
     } else {
       console.log("ERRRROOROR", res.data.message);
       toast.error(res.data.message);
@@ -74,31 +75,42 @@ export const getFarmerData = async (id) => {
 export const addFarmerProduct = async (data, globalState) => {
   try {
     console.log("DONE , ", data);
+    data.quantity = Number(data.quantity);
+    data.apmcid = Number(data.apmcid);
+    console.log(data);
     const { contract } = globalState;
-    console.log(contract);
-    await contract.addProduct(
-      data.name,
-      data.pincode,
-      data.quantity,
-      data.unit,
-      data.image,
-      data.district,
-      data.state
-    );
+    // console.log(contract);
+    await contract
+      .addProduct(
+        data.commodity,
+        data.quantity,
+        data.unit,
+        data.image,
+        data.tplic,
+        data.apmcid,
+        data.tsp
+      )
+      .then((result) => {
+        console.log(result);
+      });
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getFarmerProductDetails = async (globalState) => {
+export const getFarmerProductDetails = async (globalState, setProductData) => {
   try {
-    const accounts = await window.ethereum.request({
-      method: "eth_accounts",
-    });
-    // console.log("ACCOUNTS" ,accounts[0])
+    // const accounts = await window.ethereum.request({
+    //   method: "eth_accounts",
+    // });
+    // console.log("ACCOUNTS", accounts[0]);
     const { contract } = globalState;
-    const res = await contract.getFarmerProducts(accounts[0]);
+    const res = await contract.getFarmerProducts(globalState.signer.address);
+    console.log(res);
 
+    if (res) {
+      setProductData(res);
+    }
     // console.log("RESS" , res)
     return res;
   } catch (error) {
@@ -110,7 +122,7 @@ export const getUserRole = async (globalState, dispatch) => {
   try {
     const { signer } = globalState;
     let addressString = signer.address;
-    addressString = addressString.toLowerCase();
+    // addressString = addressString.toLowerCase();
     // console.log(addressString);
     const result = await preLoginApi.post("/api/users/login/farmer", {
       metamaskWalletAddress: addressString,
@@ -123,10 +135,37 @@ export const getUserRole = async (globalState, dispatch) => {
   }
 };
 
-// export const verifyFarmerFrontend = async(globalState) =>{
-//   try {
+export const getUser = async (globalState) => {
+  try {
+    const { signer } = globalState;
+    let addressString = signer.address;
+    // addressString = addressString.toLowerCase();
+    // console.log(addressString);
+    const result = await preLoginApi.post("/api/users/login/farmer", {
+      metamaskWalletAddress: addressString,
+    });
+    return result.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+export const verifyFarmerFrontend = async (farmerData, globalState) => {
+  console.log(farmerData);
+  try {
+    await preLoginApi
+      .put("/api/users/verify/farmer", {
+        aadharNumber: farmerData.aadharNumber,
+      })
+      .then(async (result) => {
+        const { contract } = globalState;
+        await contract
+          .grantRoleToFarmer(farmerData.metamaskWalletAddress)
+          .then(() => {
+            console.log("Done");
+          });
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};

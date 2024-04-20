@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DummyImage from "../../assets/Image/dummyImage.png";
 import DummyUser from "../../assets/Image/DummyUser.png";
+import { getUser } from "../../Apis/Farmer/FarmersApi";
+import { useSelector } from "react-redux";
 const FarmerProfileForm = () => {
+  const globalState = useSelector((state) => state.globlaStateSlice);
+
   const [farmerDetails, setFarmerDetails] = React.useState({
     name: "",
     location: "",
@@ -10,6 +14,7 @@ const FarmerProfileForm = () => {
     aadharCardNumber: "",
     aadharCardImage: "",
     userPhoto: "",
+    verified: false,
   });
 
   const [editBtn, setEditBtns] = React.useState({
@@ -26,7 +31,7 @@ const FarmerProfileForm = () => {
   const [previewUserPhoto, setPreviewUserPhoto] = React.useState();
 
   const handleChange = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const { name, value } = e.target;
     // console.log(name, value);
     if (name === "userPhoto" || name === "aadharCardImage") {
@@ -55,20 +60,32 @@ const FarmerProfileForm = () => {
     }
   };
 
-  const handleEdit = (e)=>{
-    e.preventDefault()
-    const {name} = e.target
-    console.log("Name " , name)
+  const handleEdit = (e) => {
+    e.preventDefault();
+    const { name } = e.target;
+    console.log("Name ", name);
 
     setEditBtns({
       ...editBtn,
-      [name] : !editBtn[name]
-    })
-  }
-  const handleFormSubmit = (e)=>{
-    e.preventDefault()
-    
-  }
+      [name]: !editBtn[name],
+    });
+  };
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  useEffect(() => {
+    getUser(globalState).then((result) => {
+      setFarmerDetails({
+        name: result.name,
+        location: result.location,
+        contactNumber: result.phone,
+        aadharCardNumber: result.aadharNumber,
+        aadharCardImage: result.aadharImage,
+        verified: result.verified,
+      });
+    });
+  }, []);
   // Fetch Farmer Data first
   return (
     <div className="bg-white shadow-md rounded p-[15px]">
@@ -76,7 +93,7 @@ const FarmerProfileForm = () => {
         <div className="flex justify-around">
           <div className="flex  relative  flex-col items-center w-full">
             <img
-            className="w-[100px] h-[100px] object-contain"
+              className="w-[100px] h-[100px] object-contain"
               src={
                 previewUserPhoto
                   ? previewUserPhoto
@@ -84,18 +101,20 @@ const FarmerProfileForm = () => {
               }
               alt="user"
             />
-           
-            <button className="bg-blue-500 overflow-hidden relative px-[12px] py-[5px] rounded-lg mt-[10px] text-white">Upload
-            <input
-                  type="file"
-                  name="userPhoto"
-                  onChange={handleChange}
-                  className="opacity-[0]  absolute bottom-[-17px] right-[-100px]"
-                /></button>
+
+            <button className="bg-blue-500 overflow-hidden relative px-[12px] py-[5px] rounded-lg mt-[10px] text-white">
+              Upload
+              <input
+                type="file"
+                name="userPhoto"
+                onChange={handleChange}
+                className="opacity-[0]  absolute bottom-[-17px] right-[-100px]"
+              />
+            </button>
           </div>
           <div className="flex relative flex-col items-center w-full">
             <img
-            className="w-[110px] h-[100px] object-contain"
+              className="w-[110px] h-[100px] object-contain"
               src={
                 previewAadhar
                   ? previewAadhar
@@ -103,97 +122,145 @@ const FarmerProfileForm = () => {
               }
               alt="aadhar card image"
             />
-           
-            <button 
-            className="bg-blue-500 overflow-hidden relative px-[12px] py-[5px] rounded-lg mt-[10px] text-white">Upload
-            <input
-                  type="file"
-                  name="aadharCardImage"
-                  onChange={handleChange}
-                  className="opacity-[0]  absolute bottom-[-17px] right-[-100px]"
-                />
+
+            <button className="bg-blue-500 overflow-hidden relative px-[12px] py-[5px] rounded-lg mt-[10px] text-white">
+              Upload
+              <input
+                type="file"
+                name="aadharCardImage"
+                onChange={handleChange}
+                className="opacity-[0]  absolute bottom-[-17px] right-[-100px]"
+              />
             </button>
           </div>
         </div>
+        <div className="flex justify-between  items-center mt-[20px]">
+          <label htmlFor="verified" className="font-bold">
+            Verification Status
+          </label>
+          <label htmlFor="verified" className="font-bold mr-[10px]">
+            {farmerDetails ? (
+              farmerDetails.verified ? (
+                <span className="text-green-500">True</span>
+              ) : (
+                <span className="text-red-500">False</span>
+              )
+            ) : (
+              <span className="text-red-500">False</span>
+            )}
+          </label>
+        </div>
         <div className="flex justify-between  items-center mt-[12px]">
           <div className="flex flex-col w-full">
-          <label htmlFor="name" className="font-semibold">Name</label>
-          <input
+            <label htmlFor="name" className="font-semibold">
+              Name
+            </label>
+            <input
+              name="name"
+              value={farmerDetails.name}
+              onChange={handleChange}
+              type="text"
+              className={`w-[80%] rounded-lg bg-white  border-2 border-black ${
+                editBtn.name && "opacity-[0.89] cursor-not-allowed "
+              }`}
+              disabled={editBtn.name}
+              placeholder="Enter Your Name"
+            />
+          </div>
+          <button
             name="name"
-            value={farmerDetails.name}
-            onChange={handleChange}
-            type="text"
-            className={`w-[80%] rounded-lg bg-white  border-2 border-black ${editBtn.name && "opacity-[0.89] cursor-not-allowed "  }`}
-            disabled={editBtn.name}
-            placeholder="Enter Your Name"
-          />
-          </div>
-          <button name = "name" className="bg-slate-100 text-black rounded-md px-[12px] py-[5px]"
+            className="bg-slate-100 text-black rounded-md px-[12px] py-[5px]"
             onClick={handleEdit}
-          >Edit</button>
+          >
+            Edit
+          </button>
         </div>
 
         {/* location */}
         <div className="flex justify-between  items-center mt-[12px]">
           <div className="flex flex-col w-full">
-          <label htmlFor="location" className="font-semibold">Location</label>
-          <input
+            <label htmlFor="location" className="font-semibold">
+              Location
+            </label>
+            <input
+              name="location"
+              value={farmerDetails.location}
+              onChange={handleChange}
+              type="text"
+              className={`w-[80%] rounded-lg bg-white border-2 border-black ${
+                editBtn.location && "opacity-[0.89] cursor-not-allowed "
+              }`}
+              disabled={editBtn.location}
+              placeholder="Enter Your location"
+            />
+          </div>
+          <button
             name="location"
-            value={farmerDetails.location}
-            onChange={handleChange}
-            type="text"
-            className={`w-[80%] rounded-lg bg-white border-2 border-black ${editBtn.location && "opacity-[0.89] cursor-not-allowed "  }`}
-            disabled={editBtn.location}
-            placeholder="Enter Your location"
-          />
-          </div>
-          <button name = "location" className="bg-slate-100 text-black rounded-md px-[12px] py-[5px]"
+            className="bg-slate-100 text-black rounded-md px-[12px] py-[5px]"
             onClick={handleEdit}
-          >Edit</button>
+          >
+            Edit
+          </button>
         </div>
         {/* location */}
 
         {/* Contact Number */}
         <div className="flex justify-between  items-center mt-[12px]">
           <div className="flex flex-col w-full">
-          <label htmlFor="contactNumber" className="font-semibold">Contact Number</label>
-          <input
-            name="contactNumber"
-            value={farmerDetails.contactNumber}
-            onChange={handleChange}
-            type="text"
-            className={`w-[80%] rounded-lg bg-white border-2 border-black ${editBtn.contactNumber && "opacity-[0.89] cursor-not-allowed "  }`}
-            disabled={editBtn.contactNumber}
-            placeholder="Enter Your contactNumber"
-          />
+            <label htmlFor="contactNumber" className="font-semibold">
+              Contact Number
+            </label>
+            <input
+              name="contactNumber"
+              value={farmerDetails.contactNumber}
+              onChange={handleChange}
+              type="text"
+              className={`w-[80%] rounded-lg bg-white border-2 border-black ${
+                editBtn.contactNumber && "opacity-[0.89] cursor-not-allowed "
+              }`}
+              disabled={editBtn.contactNumber}
+              placeholder="Enter Your contactNumber"
+            />
           </div>
-          <button name = "contactNumber" className="bg-slate-100 text-black rounded-md px-[12px] py-[5px]"
+          <button
+            name="contactNumber"
+            className="bg-slate-100 text-black rounded-md px-[12px] py-[5px]"
             onClick={handleEdit}
-          >Edit</button>
+          >
+            Edit
+          </button>
         </div>
         {/* Contact Number */}
 
         {/* Aadhar Card number */}
         <div className="flex justify-between  items-center mt-[12px]">
           <div className="flex flex-col w-full">
-          <label htmlFor="aadharCardNumber" className="font-semibold">Aadhar Card Number</label>
-          <input
-            name="aadharCardNumber"
-            value={farmerDetails.aadharCardNumber}
-            onChange={handleChange}
-            type="text"
-            className={`w-[80%] rounded-lg bg-white border-2 border-black ${editBtn.aadharCardNumber && "opacity-[0.89] cursor-not-allowed "  }`}
-            disabled={editBtn.aadharCardNumber}
-            placeholder="Enter Your contactNumber"
-          />
+            <label htmlFor="aadharCardNumber" className="font-semibold">
+              Aadhar Card Number
+            </label>
+            <input
+              name="aadharCardNumber"
+              value={farmerDetails.aadharCardNumber}
+              onChange={handleChange}
+              type="text"
+              className={`w-[80%] rounded-lg bg-white border-2 border-black ${
+                editBtn.aadharCardNumber && "opacity-[0.89] cursor-not-allowed "
+              }`}
+              disabled={editBtn.aadharCardNumber}
+              placeholder="Enter Your contactNumber"
+            />
           </div>
-          <button name = "aadharCardNumber" className="bg-slate-100 text-black rounded-md px-[12px] py-[5px]"
+          <button
+            name="aadharCardNumber"
+            className="bg-slate-100 text-black rounded-md px-[12px] py-[5px]"
             onClick={handleEdit}
-          >Edit</button>
+          >
+            Edit
+          </button>
         </div>
         {/* Aadhar Card number */}
 
-        <button 
+        <button
           className="bg-slate-100 text-black rounded-md px-[12px] py-[5px] mt-[15px]"
           onClick={handleFormSubmit}
         >

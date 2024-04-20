@@ -4,19 +4,19 @@ import { RegisterOfficer } from "../../Apis/APMC_Officer/ApmcOfficerApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 const ApmcOfficerRegistrationForm = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const {address} = useSelector(state => state.userSlice)
-  const globalState = useSelector(state => state.globlaStateSlice)
+  const { address } = useSelector((state) => state.userSlice);
+  const globalState = useSelector((state) => state.globlaStateSlice);
   const [officerData, setOfficerData] = React.useState({
     aadharNumber: "",
-    metaMaskAddress: "",
+    walletAddress: "",
     name: "",
     state: "",
     district: "",
-    pincode : "",
+    pincode: "",
     aadharImage: "",
-    contactNumber : ""
+    contactNumber: "",
   });
 
   const [previewAadhar, setPreviewAadhar] = React.useState("");
@@ -31,7 +31,7 @@ const ApmcOfficerRegistrationForm = () => {
 
       reader.onloadend = () => {
         // console.log(reader.result);
-          setPreviewAadhar(reader.result);
+        setPreviewAadhar(reader.result);
         setOfficerData((prev) => ({
           ...prev,
           [name]: file,
@@ -45,32 +45,53 @@ const ApmcOfficerRegistrationForm = () => {
     }
   };
 
-  const handleSubmit= (e)=>{
-    e.preventDefault()
-
-    if(!officerData.name || !officerData.aadharImage || !officerData.aadharNumber 
-        || !officerData.contactNumber || !address || !officerData.state
-        || !officerData.district || !officerData.pincode){
-          toast("Please Fill All Details")
-          return;
-      }
-    const add = {
-      "state" : officerData.state,
-      "district" : officerData.district,
-      "pincode" : officerData.pincode
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(officerData);
+    if (
+      !officerData.name ||
+      !officerData.aadharImage ||
+      !officerData.aadharNumber ||
+      !officerData.contactNumber ||
+      !officerData.state ||
+      !officerData.district ||
+      !officerData.pincode
+    ) {
+      toast("Please Fill All Details");
+      return;
     }
-    const data = new FormData()
-    data.append("name",officerData.name)
-    data.append("metaMaskAddress" , address)
-    // data.append("state" , officerData.state)
-    // data.append("district" , officerData.district)
-    data.append("address",JSON.stringify(add))    
-    data.append("aadharImage" , officerData.aadharImage)
-    data.append("aadharNumber" , officerData.aadharNumber)
-    data.append("contactNumber" , officerData.contactNumber)
-    data.append("role" , "officer")
-    RegisterOfficer(data , globalState,navigate)
-  }
+    const add = {
+      state: officerData.state,
+      district: officerData.district,
+      pincode: officerData.pincode,
+    };
+    const data = new FormData();
+    data.append("name", officerData.name);
+    data.append("metamaskWalletAddress", officerData.walletAddress);
+    data.append("location", JSON.stringify(add));
+    data.append("aadharImage", officerData.aadharImage);
+    data.append("aadharNumber", officerData.aadharNumber);
+    data.append("phone", officerData.contactNumber);
+    data.append("role", "officer");
+    RegisterOfficer(data, globalState, navigate);
+  };
+
+  const handleConnectWallet = async (e) => {
+    e.preventDefault();
+
+    const res = globalState.signer.address;
+    console.log(res);
+    if (!res.error) {
+      setOfficerData({
+        ...officerData,
+        ["walletAddress"]: res,
+      });
+      // setFarmerDetails["walletAddress"] = address
+      return;
+    } else {
+      toast(res.message);
+    }
+  };
   return (
     <div className="w-full mt-[10px] flex items-center justify-center bg-gray-100 ">
       <div className="bg-white p-[20px] rounded-lg shadow-md w-full">
@@ -97,28 +118,27 @@ const ApmcOfficerRegistrationForm = () => {
                 />
               </div>
               <div className="relative  flex flex-col justify-between items-center bottom-[-10px]">
-                  <input
-                    type="file"
-                    name="aadharImage"
-                    onChange={handleChange}
-                    className="opacity-[0] absolute bottom-[0px] right-[-100px]"
-                  />
-                  <button
-                    disabled
-                    className="bg-blue-500 text-white h-[50px] w-[100px] px-[4px] py-[2px] rounded-lg"
-                  >
-                    Upload Aadhar
-                  </button>
-                </div>
+                <input
+                  type="file"
+                  name="aadharImage"
+                  onChange={handleChange}
+                  className="opacity-[0] absolute bottom-[0px] right-[-100px]"
+                />
+                <button
+                  disabled
+                  className="bg-blue-500 text-white h-[50px] w-[100px] px-[4px] py-[2px] rounded-lg"
+                >
+                  Upload Aadhar
+                </button>
+              </div>
             </div>
-            {
-              officerData.aadharImage &&
-            <img
-              className="mt-[10px] w-[100px] object-contain h-[100px]"
-              src={previewAadhar}
-              alt="aadhar image"
-            />
-            }
+            {officerData.aadharImage && (
+              <img
+                className="mt-[10px] w-[100px] object-contain h-[100px]"
+                src={previewAadhar}
+                alt="aadhar image"
+              />
+            )}
           </div>
 
           <div className="flex justify-between items-end">
@@ -167,21 +187,21 @@ const ApmcOfficerRegistrationForm = () => {
                 Metamask Address
               </label>
               <div className="flex ">
-              <p
-                type="text"
-                id="contract-address"
-                
-                className="form-input mt-1 h-[50px] p-[10px] block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
-                
-              >
-                {address}
-              </p>
-              <button className="bg-blue-500 ml-[10px] h-[60px] w-[100px] text-white px-[4px] py-[2px] rounded-md" disabled={address !== null}>Connect Wallet</button>
+                <p
+                  type="text"
+                  id="contract-address"
+                  className="form-input mt-1 h-[50px] p-[10px] block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
+                >
+                  {officerData.walletAddress}
+                </p>
+                <button
+                  className="bg-blue-500 ml-[10px] h-[60px] w-[100px] text-white px-[4px] py-[2px] rounded-md"
+                  onClick={handleConnectWallet}
+                >
+                  Connect Wallet
+                </button>
               </div>
             </div>
-            {/* <button className="bg-blue-500 p-[5px] text-white rounded-md">
-              Connect Wallet
-            </button> */}
           </div>
           <div className="flex justify-between items-end">
             <div className="w-full mr-[10px]">

@@ -176,13 +176,8 @@
     "version": "0.8.19+commit.7dd6d404.Emscripten.clang"
   },
   "networks": {},
-<<<<<<< HEAD
   "schemaVersion": "3.4.13",
-  "updatedAt": "2024-01-24T09:17:51.631Z",
-=======
-  "schemaVersion": "3.4.16",
-  "updatedAt": "2024-01-29T05:17:00.941Z",
->>>>>>> c4902c0f5aa64e718c61663c440d7691e958ceff
+  "updatedAt": "2024-04-08T15:50:17.527Z",
   "devdoc": {
     "details": "Interface of the ERC165 standard, as defined in the https://eips.ethereum.org/EIPS/eip-165[EIP]. Implementers can declare support of contract interfaces, which can then be queried by others ({ERC165Checker}). For an implementation, see {ERC165}.",
     "kind": "dev",

@@ -10,6 +10,7 @@ import { setStateDetails } from "./ReduxStore/slices/globalStateSlice";
 import { setUserDetails } from "./ReduxStore/slices/userSlice";
 import { connectWallet } from "./utils/functions";
 import { getUserRole } from "./Apis/Farmer/FarmersApi";
+import Sidebar from "./Components/Common/Sidebar";
 function App() {
   const dispatch = useDispatch();
   const globalState = useSelector((state) => state.globlaStateSlice);
@@ -18,7 +19,7 @@ function App() {
     console.log(globalState);
     const connectWallet = async () => {
       const FarmerContractAddress =
-        "0xA5a0576C188Fad245706A5a53Aa5BDc3038DdaF4";
+        "0x4AA98b48c5e07a309E700188D807b55D12f40451";
       const FarmerContractABI = FarmerABI.abi;
       try {
         let provider = new ethers.BrowserProvider(window.ethereum);
@@ -48,6 +49,7 @@ function App() {
   return (
     <div className="overflow-x-hidden h-screen bg-gray-100">
       <Header />
+
       <div className="w-[80%] mt-[50px] h-full m-auto">
         <Outlet />
       </div>

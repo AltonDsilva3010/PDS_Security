@@ -65,6 +65,7 @@ const FarmerRegistrationForm = () => {
   };
   const submitForm = (e) => {
     e.preventDefault();
+    console.log(globalState);
     if (isBtnDisabled()) {
       toast("Please Fill Form Completely");
       return;
@@ -145,12 +146,12 @@ const FarmerRegistrationForm = () => {
   const handleConnectWallet = async (e) => {
     e.preventDefault();
 
-    const res = address;
+    const res = globalState.signer.address;
     console.log(res);
     if (!res.error) {
       setFarmerDetails({
         ...farmerDetails,
-        ["walletAddress"]: res.message,
+        ["walletAddress"]: res,
       });
       // setFarmerDetails["walletAddress"] = address
       return;
@@ -337,19 +338,22 @@ const FarmerRegistrationForm = () => {
                 >
                   Metamask Wallet Address
                 </label>
-                <p
+                <input
+                  type="text"
+                  name="walletAddress"
+                  value={farmerDetails.walletAddress}
+                  onChange={handleChange}
                   id="contract-address"
                   disabled
-                  className="form-input h-[50px] p-[10px] mt-1 block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
-                >
-                  {address}
-                </p>
-                {/* <button
+                  className="form-input mt-1 block w-full border rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
+                  required
+                />
+                <button
                   className="bg-blue-500 py-[5px] px-[12px] text-white mt-[8px] rounded-lg"
                   onClick={handleConnectWallet}
                 >
                   Connect Wallet
-                </button> */}
+                </button>
               </div>
             </div>
           </div>
