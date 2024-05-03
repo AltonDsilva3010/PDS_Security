@@ -14,6 +14,7 @@ const FarmerProfileForm = () => {
     aadharCardNumber: "",
     aadharCardImage: "",
     userPhoto: "",
+    role: "",
     verified: false,
   });
 
@@ -78,11 +79,12 @@ const FarmerProfileForm = () => {
     getUser(globalState).then((result) => {
       setFarmerDetails({
         name: result.name,
-        location: result.location,
+        location: JSON.parse(result.location),
         contactNumber: result.phone,
         aadharCardNumber: result.aadharNumber,
         aadharCardImage: result.aadharImage,
         verified: result.verified,
+        role: result.role,
       });
     });
   }, []);
@@ -175,6 +177,16 @@ const FarmerProfileForm = () => {
             Edit
           </button>
         </div>
+        <div className="flex justify-between  items-center mt-[12px]">
+          <div className="flex flex-col w-[80%]">
+            <label htmlFor="name" className="font-semibold">
+              Role
+            </label>
+            <div className="w-[90%] rounded-lg bg-white border-2 border-black p-2">
+              {farmerDetails.role}
+            </div>
+          </div>
+        </div>
 
         {/* location */}
         <div className="flex justify-between  items-center mt-[12px]">
@@ -182,7 +194,18 @@ const FarmerProfileForm = () => {
             <label htmlFor="location" className="font-semibold">
               Location
             </label>
-            <input
+            <div
+              className={`w-[80%] rounded-lg bg-white border-2 border-black ${
+                editBtn.location && "opacity-[0.89] cursor-not-allowed p-[5px]"
+              }`}
+            >
+              <div>
+                {farmerDetails.location.state},{" "}
+                {farmerDetails.location.district},{" "}
+                {farmerDetails.location.pincode}
+              </div>
+            </div>
+            {/* <input
               name="location"
               value={farmerDetails.location}
               onChange={handleChange}
@@ -192,7 +215,7 @@ const FarmerProfileForm = () => {
               }`}
               disabled={editBtn.location}
               placeholder="Enter Your location"
-            />
+            /> */}
           </div>
           <button
             name="location"

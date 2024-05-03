@@ -602,6 +602,10 @@ input:focus{
   top: 1.25rem;
 }
 
+.top-\[12px\] {
+  top: 12px;
+}
+
 .top-\[20px\] {
   top: 20px;
 }
@@ -614,18 +618,9 @@ input:focus{
   margin: auto;
 }
 
-.m-1 {
-  margin: 0.25rem;
-}
-
 .mx-2 {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
-}
-
-.mx-\[10px\] {
-  margin-left: 10px;
-  margin-right: 10px;
 }
 
 .mx-auto {
@@ -730,10 +725,6 @@ input:focus{
   margin-top: 20px;
 }
 
-.mt-\[4px\] {
-  margin-top: 4px;
-}
-
 .mt-\[50px\] {
   margin-top: 50px;
 }
@@ -778,6 +769,10 @@ input:focus{
   height: 40px;
 }
 
+.h-\[48px\] {
+  height: 48px;
+}
+
 .h-\[50px\] {
   height: 50px;
 }
@@ -818,10 +813,6 @@ input:focus{
   width: 110px;
 }
 
-.w-\[200px\] {
-  width: 200px;
-}
-
 .w-\[300px\] {
   width: 300px;
 }
@@ -834,12 +825,24 @@ input:focus{
   width: 40px;
 }
 
+.w-\[48\%\] {
+  width: 48%;
+}
+
 .w-\[50\%\] {
   width: 50%;
 }
 
+.w-\[60\%\] {
+  width: 60%;
+}
+
 .w-\[80\%\] {
   width: 80%;
+}
+
+.w-\[90\%\] {
+  width: 90%;
 }
 
 .w-full {
@@ -932,10 +935,6 @@ input:focus{
 
 .gap-\[20px\] {
   gap: 20px;
-}
-
-.gap-\[2px\] {
-  gap: 2px;
 }
 
 .gap-\[50px\] {
@@ -1160,6 +1159,10 @@ input:focus{
   padding: 12px;
 }
 
+.p-\[13px\] {
+  padding: 13px;
+}
+
 .p-\[15px\] {
   padding: 15px;
 }
@@ -1248,6 +1251,10 @@ input:focus{
 .py-\[8px\] {
   padding-top: 8px;
   padding-bottom: 8px;
+}
+
+.pt-\[10px\] {
+  padding-top: 10px;
 }
 
 .text-left {

@@ -18,7 +18,7 @@ import { toast } from "react-toastify";
 import CustomTable from "../../Common/CustomTable";
 import { useNavigate } from "react-router-dom";
 
-const DashboardDetails = () => {
+const FCIDashDetails = () => {
   const [details, setDetails] = React.useState([{ 1: "hello" }]);
   const [allProducts, setAllProducts] = useState([]);
   const [changedDetails, setChangedDetails] = useState([]);
@@ -85,7 +85,7 @@ const DashboardDetails = () => {
   const handleClick = (id) => {
     console.log(id);
     setActiveId(id);
-    navigate(`/commodities/${id}`);
+    navigate(`/dashboard/fci/${id}`);
     setOpenModal((prev) => !prev);
   };
 
@@ -186,4 +186,4 @@ const DashboardDetails = () => {
   );
 };
 
-export default DashboardDetails;
+export default FCIDashDetails;

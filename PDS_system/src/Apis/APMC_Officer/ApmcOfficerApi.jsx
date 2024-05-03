@@ -78,7 +78,7 @@ export const addAPMC = async (data, globalState) => {
       data.contact
     );
     console.log(result);
-    // toast.success(res.data.message);
+    toast.success("APMC added successfully!");
   } catch (error) {
     toast.error(error);
   }
@@ -131,15 +131,47 @@ export const getFarmerProduct = async (productId, globalState) => {
   }
 };
 
-export const buyFarmerProduct = async (productId, bidAmount, globalState) => {
+export const placeBidonProduct = async (productId, bidAmount, globalState) => {
   try {
     bidAmount = String(bidAmount);
     // console.log(bidAmount, ethers.parseEther(bidAmount));
     const { contract } = globalState;
-    const result = await contract.buyProduct(productId, {
-      value: ethers.parseEther(bidAmount),
-    });
-    console.log("Done", result);
+    const result = await contract
+      .placeBid(productId, {
+        value: ethers.parseEther(bidAmount),
+      })
+      .then(() => {
+        toast.success("Bid Placed");
+      });
+  } catch (error) {
+    console.log(error);
+    toast.error(error);
+  }
+};
+
+export const buyAtMSPFunction = async (productId, bidAmount, globalState) => {
+  try {
+    bidAmount = String(bidAmount);
+    const { contract } = globalState;
+    const result = await contract
+      .buyAtMSP(productId, {
+        value: ethers.parseEther(bidAmount),
+      })
+      .then(() => {
+        toast.success("Bought at MSP");
+      });
+  } catch (error) {
+    console.log(error);
+    toast.error(error);
+  }
+};
+
+export const getAuctionEndedonProduct = async (productId, globalState) => {
+  try {
+    const { contract } = globalState;
+    const result = await contract.bidsDone(productId);
+    console.log(result);
+    return result;
   } catch (error) {
     console.log(error);
   }
@@ -150,7 +182,51 @@ export const qualityCheckProduct = async (productId, globalState) => {
     const { contract } = globalState;
     const result = await contract.inspectFoodSafety(productId);
     console.log("Done", result);
+    toast.success("Product Verified!");
   } catch (error) {
     console.log(error);
   }
+};
+
+export const getAllBidsFunction = async (globalState) => {
+  try {
+    const { contract } = globalState;
+    const result = await contract.getAllBids();
+    return result;
+  } catch (error) {
+    console.log(error);
+    toast.error(error);
+  }
+};
+
+export const convertUnixtoDateTime = (unixTimestamp) => {
+  const dateObject = new Date(unixTimestamp * 1000);
+
+  // Option 1: Use toLocaleString for user-friendly format (depends on locale)
+  const formattedDateTime = dateObject.toLocaleString();
+
+  // Option 2: Use specific methods for more control over formatting
+  const year = dateObject.getFullYear();
+  const month = String(dateObject.getMonth() + 1).padStart(2, "0"); // Add leading zero for single-digit months
+  const day = String(dateObject.getDate()).padStart(2, "0");
+  const hours = String(dateObject.getHours()).padStart(2, "0");
+  const minutes = String(dateObject.getMinutes()).padStart(2, "0");
+  const seconds = String(dateObject.getSeconds()).padStart(2, "0");
+
+  const formattedDateTimeWithPadding = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+  // Choose the option that best suits your needs:
+
+  // return formattedDateTime;  // Option 1 (user-friendly)
+  return formattedDateTimeWithPadding; // Option 2 (more control)
+};
+
+export const weiToRupees = (weiAmount, exchangeRate) => {
+  const etherAmount = weiAmount / 10 ** 18;
+
+  // 2. Convert Ether to Rupees using the provided exchange rate
+  const rupeesAmount = etherAmount * exchangeRate;
+
+  // 3. Round the result to two decimal places (optional)
+  return rupeesAmount.toFixed(2);
 };

@@ -32,6 +32,7 @@ const AddProductForm = () => {
     apmcid: null,
     msp: null,
     tsp: null,
+    duration: null,
     tspine: null,
   });
 
@@ -129,6 +130,7 @@ const AddProductForm = () => {
         }
 
         // data.image = ImgHash;
+        toast.success("Image added!");
         console.log(ImgHash);
       } catch (error) {
         console.log(error);

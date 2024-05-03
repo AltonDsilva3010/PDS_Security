@@ -140,17 +140,25 @@ const VerifyFarmerModal = () => {
             </div>
 
             {/* Confirmation Button */}
-            <div className="flex  justify-around items-center mt-[10px]">
-              <button className="p-[10px] w-[40%] mr-[10px] bg-red-500 text-white rounded-md">
-                Reject
-              </button>
-              <button
-                className="p-[10px] w-[40%] bg-green-500 text-white rounded-md"
-                onClick={handleVerification}
-              >
-                Confirm
-              </button>
-            </div>
+            {farmerData.verified ? (
+              <div className="flex  justify-around items-center mt-[10px]">
+                <p className="p-[10px] w-[40%] bg-green-500 text-white rounded-md text-center">
+                  Verification Done!
+                </p>
+              </div>
+            ) : (
+              <div className="flex  justify-around items-center mt-[10px]">
+                <button className="p-[10px] w-[40%] mr-[10px] bg-red-500 text-white rounded-md">
+                  Reject
+                </button>
+                <button
+                  className="p-[10px] w-[40%] bg-green-500 text-white rounded-md"
+                  onClick={handleVerification}
+                >
+                  Confirm
+                </button>
+              </div>
+            )}
           </div>
         ) : (
           <h1>Loading - {id}</h1>

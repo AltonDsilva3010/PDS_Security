@@ -9,13 +9,14 @@ import {
   qualityCheckProduct,
   convertUnixtoDateTime,
   weiToRupees,
+  buyAtMSPFunction,
 } from "../../../Apis/APMC_Officer/ApmcOfficerApi";
 import { commodityprices } from "../../FCI/constants";
 
-const ProductDetailsModal = () => {
+const FCIProdModal = () => {
   const [productDetails, setProductDetails] = useState([]);
   const [productBid, setProductBid] = useState(null);
-  const [currentTime, setCurrentTime] = useState(null);
+
   const [exgRate, setExgRate] = useState(null);
   const globalState = useSelector((state) => state.globlaStateSlice);
   const { id } = useParams();
@@ -82,15 +83,14 @@ const ProductDetailsModal = () => {
     }
   };
 
-  const handlePlaceBid = () => {
-    placeBidonProduct(id, productBid / exgRate, globalState);
+  const handleBuyAtMSP = () => {
+    buyAtMSPFunction(id, productBid / exgRate, globalState);
   };
 
   useEffect(() => {
     getEthPrice().then((result) => {
       setExgRate(result);
     });
-    setCurrentTime(Date.now() / 1000);
   }, []);
 
   useEffect(() => {
@@ -228,50 +228,21 @@ const ProductDetailsModal = () => {
             {/* Email */}
 
             {/* Confirmation Button */}
-            {/* <div className="flex  justify-around items-center mt-[10px]">
+            <div className="flex  justify-around items-center mt-[10px]">
               <button
                 className="p-[10px] w-[40%] mr-[10px] bg-green-500 text-white rounded-md"
                 onClick={handleQualityCheck}
               >
                 Confirm Quality
               </button>
-            </div> */}
-            {currentTime > Number(productDetails[10]) ? (
-              <div className="flex  justify-around items-end mt-[10px]">
-                {" "}
-                <p className="font-semibold">
-                  Auction has Ended! <br></br> Cannot Place Bid!
-                </p>
-              </div>
-            ) : (
-              <div className="flex  justify-around items-end mt-[10px]">
-                <div className="flex flex-col mr-[10px] w-full">
-                  <span className="font-semibold">Bid Amount in Rs.: </span>
-                  <input
-                    type="number"
-                    name="bid"
-                    value={productBid}
-                    placeholder="Enter Price"
-                    onChange={handleChange}
-                    className="w-full border-solid  border-2 rounded-md  border-black"
-                  />
-                </div>
-                <div className="flex flex-col mr-[10px] w-full">
-                  <span className="font-semibold">Price in ETH</span>
-                  <span className="p-[10px] border-[2px] rounded-md border-black">
-                    {`ETH ${productBid / exgRate}`}
-                  </span>
-                </div>
-                <div className="flex flex-col mr-[10px] w-full">
-                  <button
-                    className="p-[13px]  bg-green-500 text-white rounded-md"
-                    onClick={handlePlaceBid}
-                  >
-                    Place Bid
-                  </button>
-                </div>
-              </div>
-            )}
+
+              <button
+                className="p-[10px] w-[40%] mr-[10px] bg-green-500 text-white rounded-md"
+                onClick={handleBuyAtMSP}
+              >
+                Buy at MSP
+              </button>
+            </div>
           </div>
         ) : (
           <h1>Loading - {id}</h1>
@@ -281,4 +252,4 @@ const ProductDetailsModal = () => {
   );
 };
 
-export default ProductDetailsModal;
+export default FCIProdModal;

@@ -41,7 +41,8 @@ const Header = () => {
             {userRole == "officer" && (
               <NavLink to={"/dashboard/fci"}>Dashboard</NavLink>
             )}
-            {userAddress && <NavLink to={"/profile-farmer"}>Profile</NavLink>}
+            {userRole && <NavLink to={"/profile"}>Profile</NavLink>}
+            <NavLink to={"/commodities"}>Commodities</NavLink>
           </ul>
 
           <div className="flex-1 gap-x-6 items-center justify-end mt-6 space-y-6 md:flex md:space-y-0 md:mt-0">
@@ -64,11 +65,13 @@ const Header = () => {
                   </button>
                 </NavLink>
               ) : (
-                <NavLink to="/registration">
-                  <button className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex mr-[20px]">
-                    Register
-                  </button>
-                </NavLink>
+                !userRole && (
+                  <NavLink to="/registration">
+                    <button className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex mr-[20px]">
+                      Register
+                    </button>
+                  </NavLink>
+                )
               )}
 
               {/* <NavLink to="/signUp">

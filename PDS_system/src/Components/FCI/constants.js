@@ -15,10 +15,6 @@ export const navs_options = [
     title: "APMCs",
     route: "apmcs",
   },
-  {
-    title: "Notifications",
-    route: "notification",
-  },
 ];
 
 export const states = {
@@ -357,11 +353,10 @@ export const dashboardDetails = [
   },
 ];
 export const detailsHeader = [
-  { Header: "id", accessor: "0" },
-  { Header: "APMCS", accessor: "7" },
+  { Header: "APMC", accessor: "6" },
   { Header: "Commodity", accessor: "1" },
   { Header: "CommodityTraded", accessor: "2" },
-  { Header: "Price", accessor: "6" },
+  { Header: "CurrentBid", accessor: "8" },
   { Header: "Unit", accessor: "3" },
   { Header: "Status", accessor: "11" },
 ];

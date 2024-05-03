@@ -19,8 +19,32 @@ const HomeComponent = () => {
       isOpen: true, // Initially set all answers to open
     },
     {
-      question: "What is APMC Yard?",
-      answer: "...",
+      question: "What is E-nam?",
+      answer:
+        "E-NAM is an online platform that connects farmers, traders and buyers to create a unified national market for agricultural products in India.",
+      isOpen: true,
+    },
+    {
+      question: "How is Procurement done in PDS in India ?",
+      answer:
+        "1. The government announces a Minimum Support Price (MSP) for crops like wheat and rice before the sowing season. 2. FCI procures grains directly from farmers at designated mandis (markets) across surplus states like Punjab and Haryana. 3. In some states, the government mandates farmers to sell a specific portion of their harvest to the FCI at the MSP.",
+      isOpen: true,
+    },
+    {
+      question: "How is Food Quality checked in e-Nam ?",
+      answer:
+        "The government, through the Department of Marketing and Processing Cooperation (DMI), \n has defined standard quality specifications for over 200 commodities traded on eNAM. These parameters focus on physical attributes of the produce https://enam.gov.in/web/commodity/commodity-quality. \n While not mandatory, farmers can get their produce assessed by licensed assayers for a quality certificate  https://enam.gov.in/web/pop-dashboard/assaying.",
+      isOpen: true,
+    },
+    {
+      question: "How is E-payment for Farmer done in E-nam?",
+      answer: "https://youtu.be/YjGfELRaezo?si=Rw_VQGYiI7hCql_j",
+      isOpen: true,
+    },
+    {
+      question: "What is the Food Corporation of India (FCI)?",
+      answer:
+        "The Food Corporation of India (FCI) is a government-owned corporation responsible for ensuring food security and managing the procurement, storage, distribution, and sale of food grains across India.",
       isOpen: true,
     },
     // Add more FAQ items here
@@ -56,9 +80,7 @@ const HomeComponent = () => {
           <p>Mentor : Dr. Ashok Kanthe</p>
         </div>
         <div className="w-full mt-2">
-          <h1 className="font-bold text-black text-[30px] ">
-            FAQ's about our PDS
-          </h1>
+          <h1 className="font-bold text-black text-[30px] ">FAQ's about PDS</h1>
           {faqData.map((faq, index) => (
             <div key={index} className="mb-2">
               <div className="text-left py-2 px-4 border border-gray-300 rounded focus:outline-none hover:bg-gray-100">
@@ -84,7 +106,7 @@ const HomeComponent = () => {
                 </span>
               </div>
               <p
-                className={`px-4 py-2 mt-1 text-gray-600 ${
+                className={`px-4 py-2 mt-1 text-black-600 ${
                   !faq.isOpen ? "" : "hidden" // Hide answer initially or when closed
                 }`}
               >

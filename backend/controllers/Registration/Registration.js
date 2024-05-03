@@ -141,6 +141,77 @@ const registerApmcOfficer = async (req, res) => {
   }
 };
 
+const registerBuyer = async (req, res) => {
+  if (!req.body) {
+    return res.status(400).json(ErrorMessage("Did'nt Received Data", true));
+  }
+
+  try {
+    const {
+      name,
+      location,
+      aadharNumber,
+      phone,
+      metamaskWalletAddress,
+      gender,
+    } = req.body;
+
+    if (
+      !name ||
+      !location ||
+      !aadharNumber ||
+      !phone ||
+      !metamaskWalletAddress
+    ) {
+      return ErrorMessage("Information is Missing", true);
+    }
+
+    const existUser = await User.findOne({ aadharNumber }).exec();
+
+    if (existUser) {
+      return res.status(200).json({
+        message: "Already Registered",
+        error: false,
+      });
+    } else {
+      const b64_aadhar = Buffer.from(
+        req.files["aadharImage"][0].buffer
+      ).toString("base64");
+      let aadhar_URI =
+        "data:" +
+        req.files["aadharImage"][0].mimetype +
+        ";base64," +
+        b64_aadhar;
+      const cldRes_aadhar = await handleUpload(aadhar_URI, "PDS_System");
+
+      console.log("Aadhar URL", cldRes_aadhar.secure_url);
+
+      console.log(name, location, aadharNumber, phone, metamaskWalletAddress);
+
+      const newUser = {
+        name: name,
+        phone: phone,
+        metamaskWalletAddress: metamaskWalletAddress,
+        location: location,
+        aadharNumber: aadharNumber,
+        aadharImage: cldRes_aadhar.secure_url,
+        role: "buyer",
+        verified: true,
+      };
+
+      await User.create(newUser);
+
+      return res.status(200).json({
+        message: "Successfully Registered As Buyer",
+        error: false,
+      });
+    }
+  } catch (error) {
+    console.log(err);
+    return res.status(400).json(ErrorMessage(err, true));
+  }
+};
+
 const getUserDetails = async (req, res) => {
   try {
     const _id = req.id;
@@ -284,13 +355,29 @@ const getAllFarmers = async (req, res) => {
   }
 };
 
+const getAllOfficer = async (req, res) => {
+  try {
+    const allOfficers = await User.find({ role: "officer" });
+    if (!allOfficers) {
+      return res.status(200).json({
+        message: "No Officer Found",
+        error: false,
+      });
+    }
+
+    return res.status(200).json(allOfficers);
+  } catch (err) {
+    return res.status(400).json(ErrorMessage(err, true));
+  }
+};
+
 const getFarmerById = async (req, res) => {
   const { id } = req.body;
   try {
     const Farmer = await User.findById(id).exec();
     if (!Farmer) {
       return res.status(200).json({
-        message: "No farmer",
+        message: "No User",
         error: false,
       });
     }
@@ -303,9 +390,11 @@ const getFarmerById = async (req, res) => {
 
 module.exports = {
   registerFarmer,
+  registerBuyer,
   verifyFarmer,
   LoginFarmer,
   getAllFarmers,
+  getAllOfficer,
   getFarmerById,
   registerApmcOfficer,
   getUserDetails,

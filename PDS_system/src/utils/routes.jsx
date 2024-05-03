@@ -19,6 +19,31 @@ import DashboardDetails from "../Components/FCI/Dashboard/DashboardDetails";
 import AddApmcForm from "../Components/Apmc/AddApmcForm";
 import AllAPMC from "../Components/FCI/AllAPMC";
 import ProductDetailsModal from "../Components/FCI/Dashboard/ProductDetailsModal";
+import FarmerProductModal from "../Components/Farmer/FarmerProductModal";
+import FCIDashDetails from "../Components/FCI/Dashboard/FCIDashDetails";
+import FCIProdModal from "../Components/FCI/Dashboard/FCIProdModal";
+import BuyerRegistrationForm from "../Components/Buyer/BuyerRegistrationForm";
+import { useSelector, useDispatch } from "react-redux";
+import { useLocation, Navigate } from "react-router-dom";
+
+const ProtectOfficerRoute = ({ element }) => {
+  const globalState = useSelector((state) => state.globlaStateSlice);
+  const role = globalState.role;
+  // const location = useLocation;
+  if (role != "officer") {
+    return <Navigate to="/" />;
+  }
+  return element;
+};
+
+const ProtectConnectedRoute = ({ element }) => {
+  const globalState = useSelector((state) => state.globlaStateSlice);
+  if (!globalState) {
+    return <Navigate to="/" />;
+  }
+  return element;
+};
+
 export const routers = [
   {
     path: "/",
@@ -45,34 +70,50 @@ export const routers = [
         element: <AddApmcForm />,
       },
       {
+        path: "/registration/buyer",
+        element: <BuyerRegistrationForm />,
+      },
+      {
         path: "/auth",
         element: <SignUpLogin />,
       },
       {
-        path: "profile-farmer",
-        element: <FarmerProfilePage />,
+        path: "profile",
+        element: <ProtectConnectedRoute element={<FarmerProfilePage />} />,
         children: [
           {
             index: true,
             element: <FarmerProfileForm />,
           },
           {
-            path: "/profile-farmer/Products",
+            path: "/profile/Products",
             element: <ProductPage />,
+          },
+          {
+            path: "/profile/Products/:id",
+            element: <FarmerProductModal />,
           },
         ],
       },
       {
+        path: "/commodities",
+        element: <ProtectConnectedRoute element={<DashboardDetails />} />,
+      },
+      {
+        path: "commodities/:id",
+        element: <ProtectConnectedRoute element={<ProductDetailsModal />} />,
+      },
+      {
         path: "/dashboard/fci",
-        element: <Dashboard />,
+        element: <ProtectOfficerRoute element={<Dashboard />} />,
         children: [
           {
             index: true,
-            element: <DashboardDetails />,
+            element: <FCIDashDetails />,
           },
           {
             path: "/dashboard/fci/:id",
-            element: <ProductDetailsModal />,
+            element: <FCIProdModal />,
           },
           {
             path: "/dashboard/fci/verify-farmer",

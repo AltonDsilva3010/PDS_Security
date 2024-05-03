@@ -19,7 +19,7 @@ function App() {
     console.log(globalState);
     const connectWallet = async () => {
       const FarmerContractAddress =
-        "0x4AA98b48c5e07a309E700188D807b55D12f40451";
+        "0x7A91233B8fE2745CBCC96e88EaE4b10aC8123Dbd";
       const FarmerContractABI = FarmerABI.abi;
       try {
         let provider = new ethers.BrowserProvider(window.ethereum);

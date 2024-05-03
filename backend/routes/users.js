@@ -31,6 +31,14 @@ router
     Registration.registerApmcOfficer
   );
 
+router.route("/register/buyer").post(
+  upload.fields([
+    { name: "aadharImage", maxCount: 1 },
+    { name: "userImage", maxCount: 1 },
+  ]),
+  Registration.registerBuyer
+);
+
 router.route("/getdetails").post(Registration.getUserDetails);
 
 // @route    PUT api/users
@@ -49,6 +57,11 @@ router.route("/login/farmer").post(Registration.LoginFarmer);
 // @desc     Register farmer
 // @access   Public
 router.route("/all/farmer").get(Registration.getAllFarmers);
+
+// @route    POST api/users
+// @desc     Register farmer
+// @access   Public
+router.route("/all/officer").get(Registration.getAllOfficer);
 
 // @route    POST api/users
 // @desc     Get Farmer Detail by ID

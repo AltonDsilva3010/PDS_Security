@@ -28,9 +28,9 @@ const VerifyFarmer = () => {
   }, []);
   return (
     <div className="">
-      <div>
+      {/* <div>
         <FilterFarmer />
-      </div>
+      </div> */}
       <CustomTable
         data={Data}
         columns={col}

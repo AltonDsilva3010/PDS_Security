@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 import {
   getFarmerProduct,
   getEthPrice,
-  placeBidonProduct,
-  qualityCheckProduct,
   convertUnixtoDateTime,
   weiToRupees,
-} from "../../../Apis/APMC_Officer/ApmcOfficerApi";
-import { commodityprices } from "../../FCI/constants";
+  getAuctionEndedonProduct,
+} from "../../Apis/APMC_Officer/ApmcOfficerApi";
+import {
+  startAuctionFunction,
+  endAuctionFunction,
+} from "../../Apis/Farmer/FarmersApi";
 
-const ProductDetailsModal = () => {
+import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { commodityprices } from "../FCI/constants";
+
+const FarmerProductModal = () => {
   const [productDetails, setProductDetails] = useState([]);
-  const [productBid, setProductBid] = useState(null);
-  const [currentTime, setCurrentTime] = useState(null);
   const [exgRate, setExgRate] = useState(null);
+  const [bidTimer, setBidTimer] = useState(null);
+  const [compBidTimer, setCompBidTimer] = useState(null);
+  const [auctionEnded, setAuctionEnded] = useState(false);
   const globalState = useSelector((state) => state.globlaStateSlice);
   const { id } = useParams();
 
@@ -33,10 +37,6 @@ const ProductDetailsModal = () => {
     }
   }
 
-  const handleQualityCheck = () => {
-    qualityCheckProduct(id, globalState);
-  };
-
   function openLicenseImage() {
     const elem = document.getElementById("licenseImage");
     if (elem.requestFullscreen) {
@@ -50,65 +50,50 @@ const ProductDetailsModal = () => {
     }
   }
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    if (name == "bid") {
-      if (
-        !productDetails[8] && //No bid initially
-        value <
-          commodityprices[productDetails[1]].valinkg * Number(productDetails[2])
-      ) {
-        toast.error(
-          `Value cannot be less than ${
-            //Value cannot be less than Minimum Total Price
-            commodityprices[productDetails[1]].valinkg *
-            Number(productDetails[2])
-          } `
-        );
-      } else if (
-        productDetails[8] && //If there is a Bid
-        value < weiToRupees(Number(productDetails[8]), exgRate) //Value cannot be less than current Bid
-      ) {
-        toast.error(
-          `Value cannot be less than ${weiToRupees(
-            Number(productDetails[8]),
-            exgRate
-          )}`
-        );
-      } else {
-        setProductBid(value);
-      }
+  const handleBidTimerChange = (e) => {
+    console.log(e.target.value);
+    const selectedDateTime = new Date(e.target.value).getTime() / 1000; // Convert to Unix timestamp
+    const currentDateTime = Date.now() / 1000;
+
+    console.log("selectedDateTime : ", selectedDateTime);
+    console.log("CurrentDateTime : ", currentDateTime);
+    if (selectedDateTime < currentDateTime) {
+      toast.warning("Invalid Date Time Input");
+      return;
+    } else {
+      setCompBidTimer(e.target.value);
+      setBidTimer(selectedDateTime);
     }
   };
 
-  const handlePlaceBid = () => {
-    placeBidonProduct(id, productBid / exgRate, globalState);
+  const handleAuction = () => {
+    if (!bidTimer) {
+      console.log("No Bid Timer");
+      return;
+    }
+    console.log(bidTimer);
+    startAuctionFunction(bidTimer, id, globalState);
   };
 
-  useEffect(() => {
-    getEthPrice().then((result) => {
-      setExgRate(result);
-    });
-    setCurrentTime(Date.now() / 1000);
-  }, []);
+  const handleEndAuction = () => {
+    endAuctionFunction(id, globalState);
+  };
 
   useEffect(() => {
     getFarmerProduct(id, globalState).then((result) => {
       console.log(result);
       setProductDetails(result);
-      if (result[8]) {
-        // console.log(weiToRupees();
-        setProductBid(weiToRupees(Number(result[8]), exgRate));
-      } else {
-        setProductBid(commodityprices[result[1]].valinkg * Number(result[2]));
-      }
     });
-  }, [exgRate]);
-
+    getEthPrice().then((result) => {
+      setExgRate(result);
+    });
+    getAuctionEndedonProduct(id, globalState).then((result) => {
+      setAuctionEnded(result);
+    });
+  }, []);
   return (
-    <div className="w-screen h-screen bg-slate-5 flex  items-center ">
-      <div className="bg-white rounded-lg p-[20px] w-[80%]">
+    <div className="w-screen  bg-slate-5 flex   ">
+      <div className="bg-white rounded-lg p-[20px] w-[60%]">
         {/* <div className="relative h-[50px] border-b-[2px]">
           <img
             src={CloseBtn}
@@ -140,7 +125,7 @@ const ProductDetailsModal = () => {
                 <span className="font-semibold">Minimum Support Price</span>
                 <span className="p-[10px] border-[2px] rounded-md border-black">
                   {productDetails[1]
-                    ? `Rs. ${commodityprices[productDetails[1]].valinkg} `
+                    ? `${commodityprices[productDetails[1]].valinkg}`
                     : "Price"}
                 </span>
               </div>
@@ -183,14 +168,6 @@ const ProductDetailsModal = () => {
                     : "No Bid"}
                 </span>
               </div>
-              {productDetails[10] && (
-                <div className="flex flex-col mr-[10px] w-full">
-                  <span className="font-semibold">Time Left: </span>
-                  <span className="p-[10px] border-[2px] rounded-md border-black">
-                    {convertUnixtoDateTime(Number(productDetails[10]))}
-                  </span>
-                </div>
-              )}
             </div>
             <div className="flex justify-between items-center ">
               <div className="flex flex-col mr-[10px] w-full">
@@ -224,52 +201,69 @@ const ProductDetailsModal = () => {
                 />
               </div>
             </div>
-
-            {/* Email */}
-
-            {/* Confirmation Button */}
-            {/* <div className="flex  justify-around items-center mt-[10px]">
-              <button
-                className="p-[10px] w-[40%] mr-[10px] bg-green-500 text-white rounded-md"
-                onClick={handleQualityCheck}
-              >
-                Confirm Quality
-              </button>
-            </div> */}
-            {currentTime > Number(productDetails[10]) ? (
-              <div className="flex  justify-around items-end mt-[10px]">
-                {" "}
-                <p className="font-semibold">
-                  Auction has Ended! <br></br> Cannot Place Bid!
-                </p>
+            {!Number(productDetails[10]) ? (
+              <div>
+                {productDetails[11] ? (
+                  <div className="flex justify-around items-center">
+                    <div>
+                      <div className="flex flex-col w-full">
+                        <span className="font-semibold">Bid End Timer</span>
+                        <div className="h-[48px] border-[2px] rounded-md border-black">
+                          <input
+                            type="datetime-local"
+                            value={compBidTimer}
+                            onChange={handleBidTimerChange}
+                            className="h-full"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="w-full ml-[10px] ">
+                      <button
+                        className="border-[2px] bg-green-500 rounded-md font-semibold text-white h-[48px] w-full relative top-[12px]"
+                        onClick={handleAuction}
+                      >
+                        Start Auction
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex justify-around items-center">
+                    <p className="border-[2px] bg-green-500 rounded-md font-semibold text-white h-[48px] w-full text-center pt-[10px] relative top-[12px]">
+                      Wait for Quality Check to Start Auction!
+                    </p>
+                  </div>
+                )}
               </div>
             ) : (
-              <div className="flex  justify-around items-end mt-[10px]">
+              <div className="flex justify-between items-center">
                 <div className="flex flex-col mr-[10px] w-full">
-                  <span className="font-semibold">Bid Amount in Rs.: </span>
-                  <input
-                    type="number"
-                    name="bid"
-                    value={productBid}
-                    placeholder="Enter Price"
-                    onChange={handleChange}
-                    className="w-full border-solid  border-2 rounded-md  border-black"
-                  />
-                </div>
-                <div className="flex flex-col mr-[10px] w-full">
-                  <span className="font-semibold">Price in ETH</span>
+                  <span className="font-semibold">Bid End Timer</span>
                   <span className="p-[10px] border-[2px] rounded-md border-black">
-                    {`ETH ${productBid / exgRate}`}
+                    {convertUnixtoDateTime(Number(productDetails[10]))}
                   </span>
                 </div>
-                <div className="flex flex-col mr-[10px] w-full">
-                  <button
-                    className="p-[13px]  bg-green-500 text-white rounded-md"
-                    onClick={handlePlaceBid}
-                  >
-                    Place Bid
-                  </button>
-                </div>
+
+                {auctionEnded ? (
+                  <div className=" w-full ml-[10px] flex items-center mr-[10px] w-full">
+                    <p className="border-[2px] bg-white-500 rounded-md font-semibold text-black h-[48px] w-full relative top-[12px] text-center p-[10px]">
+                      Auction Ended!
+                    </p>
+                  </div>
+                ) : (
+                  globalState.role == "farmer" && (
+                    <div className="w-full ml-[10px] ">
+                      <div className="flex flex-col mr-[10px] w-full">
+                        <button
+                          className="border-[2px] bg-green-500 rounded-md font-semibold text-white h-[48px] w-full relative top-[12px]"
+                          onClick={handleEndAuction}
+                        >
+                          End Auction
+                        </button>
+                      </div>
+                    </div>
+                  )
+                )}
               </div>
             )}
           </div>
@@ -281,4 +275,4 @@ const ProductDetailsModal = () => {
   );
 };
 
-export default ProductDetailsModal;
+export default FarmerProductModal;

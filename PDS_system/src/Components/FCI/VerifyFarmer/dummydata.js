@@ -1,7 +1,7 @@
 export const Headers = [
   { Header: "Id", accessor: "_id" },
   { Header: "Name", accessor: "name" },
-  { Header: "Gender", accessor: "gender" },
+
   { Header: "MetaMaskAddress", accessor: "metamaskWalletAddress" },
   { Header: "AadharCardNumber", accessor: "aadharNumber" },
   { Header: "Verified", accessor: "verified" },
