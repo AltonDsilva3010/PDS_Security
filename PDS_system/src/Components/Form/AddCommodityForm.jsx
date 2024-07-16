@@ -1,4 +1,8 @@
 import React from "react";
+
+
+
+// FORM for adding Commodity 
 const AddCommodityForm = () => {
   return (
     <div className="w-full min-h-screen bg-gray-100 ">

@@ -1,6 +1,8 @@
 import React from "react";
 import { useTable } from "react-table";
 
+
+// common Table Component
 const CustomTable = ({ data, columns, title, handleClick }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data });

@@ -43,9 +43,11 @@ const RegistrationPage = () => {
   const handleApmcOfficerRegistration = () => {
     setApmcOfficerRegistration((prev) => !prev);
   };
+
   return (
     <div className="relative w-full ">
       <div className="flex flex-col flex-wrap gap-[20px] justify-around mt-[50px] lg:flex-row lg:mt-[100px] ">
+        
         <NavLink
           to={"/registration/farmer"}
           className="cursor-pointer w-[300px] h-[250px] flex items-center justify-center px-[15px] py-[30px] mb-[30px] lg:px-[30px] lg:py-[25px] lg:mb-0
@@ -65,6 +67,7 @@ const RegistrationPage = () => {
             Register as <br /> Apmc Officer
           </h2>
         </NavLink>
+
         <NavLink
           to={"/registration/buyer"}
           className="cursor-pointer w-[300px] h-[250px] flex items-center justify-center px-[15px] py-[30px] mb-[30px] lg:px-[30px] lg:py-[25px] lg:mb-0

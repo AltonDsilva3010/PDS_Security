@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 import { preLoginApi } from "../../Apis/baseApi";
 import { setRole } from "../../ReduxStore/slices/globalStateSlice";
 
+// APIS
+
 const addFarmerAddressToBlockchain = async (globalState, address) => {
   try {
     const { contract } = globalState;

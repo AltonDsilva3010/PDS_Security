@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { RegisterBuyer } from "../../Apis/Farmer/FarmersApi";
 import { useDispatch, useSelector } from "react-redux";
 
+
+// Buyer registering Form 
 const BuyerRegistrationForm = () => {
   const globalState = useSelector((state) => state.globlaStateSlice);
   const { address } = useSelector((state) => state.userSlice);

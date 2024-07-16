@@ -11,6 +11,8 @@ import {
 } from "../../Apis/APMC_Officer/ApmcOfficerApi";
 import axios from "axios";
 
+
+// Component for adding Product 
 const AddProductForm = () => {
   const globalState = useSelector((state) => state.globlaStateSlice);
   const [districts, setDistricts] = useState([]);
@@ -115,9 +117,9 @@ const AddProductForm = () => {
           url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
           data: formDataNew,
           headers: {
-            pinata_api_key: "403a4001d5cc63b3ce0f",
+            pinata_api_key: "Add your api",
             pinata_secret_api_key:
-              "cd44bc63c6fdbabc149ce19412cc7c049d2ee4e5477ce8e9f824ef323a8a0c30",
+              "API Secret Key",
             "Content-Type": "multipart/form-data",
           },
         });

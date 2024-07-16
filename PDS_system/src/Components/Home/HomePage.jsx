@@ -65,7 +65,6 @@ const HomeComponent = () => {
           src={HeroImage}
           className="absolute top-0 left-0 backdrop-blur-sm w-full h-full object-cover"
         /> */}
-
         <h1 className="font-bold text-black text-[80px] text-center w-full ">
           PDS System using Blockchain
         </h1>

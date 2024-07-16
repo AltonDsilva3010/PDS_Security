@@ -1,5 +1,7 @@
 import React from 'react';
 
+
+// form for registering apmc 
 const ApmcRegistration = () => {
   return (
     <div className="w-full flex items-center justify-center bg-gray-100 ">

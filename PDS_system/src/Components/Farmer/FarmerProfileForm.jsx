@@ -3,6 +3,8 @@ import DummyImage from "../../assets/Image/dummyImage.png";
 import DummyUser from "../../assets/Image/DummyUser.png";
 import { getUser } from "../../Apis/Farmer/FarmersApi";
 import { useSelector } from "react-redux";
+
+// farmer Profile details
 const FarmerProfileForm = () => {
   const globalState = useSelector((state) => state.globlaStateSlice);
 

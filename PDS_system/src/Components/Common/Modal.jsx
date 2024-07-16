@@ -1,5 +1,8 @@
 import React from 'react'
 import close from "../../assets/x-lg.svg"
+
+// common Modal Components
+
 const Modal = ({handleClose , children}) => {
   return (
     <div className='absolute top-[50%]  left-[50%] translate-x-[-50%] translate-y-[-50%] shadow-md'>

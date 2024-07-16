@@ -1,4 +1,5 @@
 import React from "react";
+
 const ContractForm = () => {
   return (
     <div className="w-full flex items-center justify-center bg-gray-100 ">

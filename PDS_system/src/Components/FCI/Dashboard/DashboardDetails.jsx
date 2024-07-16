@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import CustomTable from "../../Common/CustomTable";
 import { useNavigate } from "react-router-dom";
 
+
 const DashboardDetails = () => {
   const [details, setDetails] = React.useState([{ 1: "hello" }]);
   const [allProducts, setAllProducts] = useState([]);

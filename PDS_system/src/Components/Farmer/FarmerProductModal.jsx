@@ -15,6 +15,8 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { commodityprices } from "../FCI/constants";
 
+// route : /profile/Products/:id
+
 const FarmerProductModal = () => {
   const [productDetails, setProductDetails] = useState([]);
   const [exgRate, setExgRate] = useState(null);

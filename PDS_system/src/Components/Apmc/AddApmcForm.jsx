@@ -9,6 +9,10 @@ import { addAPMC } from "../../Apis/APMC_Officer/ApmcOfficerApi";
 import { states } from "../FCI/constants";
 import { commodities } from "../FCI/constants";
 
+
+
+
+// Form for Adding APMC 
 const AddApmcForm = () => {
   const [selectedState, setSelectedState] = useState("");
   const [districts, setDistricts] = useState([]);

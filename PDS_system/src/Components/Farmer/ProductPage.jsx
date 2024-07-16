@@ -10,6 +10,7 @@ import {
 import CustomTable from "../Common/CustomTable";
 import { useNavigate } from "react-router-dom";
 import userSlice from "../../ReduxStore/slices/userSlice";
+
 const ProductPage = () => {
   const [product_Data, setProductData] = React.useState([]);
   const [details, setDetails] = React.useState([]);

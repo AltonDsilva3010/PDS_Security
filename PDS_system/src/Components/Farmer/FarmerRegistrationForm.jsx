@@ -7,6 +7,8 @@ import { connectWallet } from "../../utils/functions";
 import { useNavigate } from "react-router-dom";
 import { RegisterFarmer } from "../../Apis/Farmer/FarmersApi";
 import { useDispatch, useSelector } from "react-redux";
+
+// Form for Registering Farmer
 const FarmerRegistrationForm = () => {
   const globalState = useSelector((state) => state.globlaStateSlice);
   const { address } = useSelector((state) => state.userSlice);

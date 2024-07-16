@@ -3,6 +3,9 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { RegisterOfficer } from "../../Apis/APMC_Officer/ApmcOfficerApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+
+
+// Form for registering APMC Officer 
 const ApmcOfficerRegistrationForm = () => {
   const navigate = useNavigate();
 
